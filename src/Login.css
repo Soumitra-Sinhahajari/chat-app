@@ -1,0 +1,11 @@
+.login-form{
+    background-color: rgb(36, 97, 121);
+    height: 5cm;
+    width: 30%;
+    align-items: center;
+    margin: auto;
+    border-width:2px;
+border-style:solid;
+border-color:black;
+border-radius: 4px;
+}
