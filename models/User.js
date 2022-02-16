@@ -13,7 +13,15 @@ const userSchema = mongoose.Schema({
 
     isOnline : {
         type : Boolean,
-        default : true
+        default : false
+    },
+
+    socketId : {
+        type: Object
+    },
+
+    chattedList : {
+        type: Array
     }
 });
 
