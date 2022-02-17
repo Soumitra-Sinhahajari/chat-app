@@ -1,14 +1,12 @@
 const message = class {
     from = String;
-    to = String;
     body = String;
-    isBroadcast = Boolean;
+    time = Date;
 
-    constructor(from, to, body, isBroadcast){
+    constructor(from, body, time){
         this.from = from;
-        this.to = to;
         this.body = body;
-        this.isBroadcast = isBroadcast;
+        this.time = time;
     }
 };
 

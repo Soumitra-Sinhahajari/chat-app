@@ -3,28 +3,31 @@ const mongoose = require('mongoose');
 const userSchema = mongoose.Schema({
     userName : {
         type : String,
-        required
+        required : true,
+        unique : true
     },
 
     passWd : {
         type : String,
-        required
+        required : true
     },
 
-    isOnline : {
-        type : Boolean,
-        default : false
-    },
+    // isOnline : {
+    //     type : Boolean,
+    //     default : false
+    // },
 
-    socketId : {
-        type: Object
-    },
+    // socketId : {
+    //     type : Object,
+    //     default : null
+    // },
 
-    chattedList : {
-        type: Array
+    joinedRoomList : {
+        type : Array,
+        default : []
     }
 });
 
-const UserModel = mongoose.Model('user', userSchema);
+const UserModel = mongoose.model('user', userSchema);
 
 module.exports = UserModel;
