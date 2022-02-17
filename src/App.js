@@ -7,7 +7,7 @@ import { useState } from 'react'
 import Room from './Room';
 
 function App() {
-  const [UserName, setUserName] = useState(null);
+  const [user, setUser] = useState(null);
 
   return (
     <div className="App">
@@ -18,7 +18,7 @@ function App() {
         </header>
         <Switch>
           <Route exact path='/'>
-            <Login setUserName={ setUserName } />
+            <Login setUser={ setUser } />
           </Route>
           <Route path='/roomtest'>
             <Room />
