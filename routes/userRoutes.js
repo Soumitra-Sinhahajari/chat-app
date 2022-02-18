@@ -1,18 +1,23 @@
 const express = require('express');
 const UserModel = require('../models/User');
-
-const {create_and_get_common_room_details} = require('./models/Room');
-// const commonRoomDetails = create_and_get_common_room_details("Common chat room");
+const RoomModel = require('../models/Room');
 
 const router = express.Router();
 
 // Read user details at the time of login
 router.get('/user/:name', async (req, res) => {
     const user_name = req.params.name;
+    const user_passwd = req.body.passwd;
     try{
         if(await UserModel.exists({userName : user_name})){
             const user_data = await UserModel.find({userName : user_name});
-            res.send(user_data);
+            if(user_passwd === user_data[0].passWd)
+            {
+                res.send(user_data[0]);
+            }
+            else{
+                res.status(400).send('Invalid user credentials');
+            }
         }
         else{
             res.status(404).send('User data not found');
@@ -26,8 +31,7 @@ router.get('/user/:name', async (req, res) => {
 // Create new user at the time of registration
 router.post('/user', async (req, res) => {
     const new_user_data = req.body;
-    const commonRoomDetails = create_and_get_common_room_details("Common chat room");
-    const last_message_time = Date;
+    const last_message_time = null;
     if (commonRoomDetails.messageList.length > 0) {
         last_message_time = commonRoomDetails.messageList[messageList.length - 1];
     }
@@ -40,11 +44,12 @@ router.post('/user', async (req, res) => {
         if(!await UserModel.exists({userName : new_user_data.userName})){
             const new_user = await UserModel.create(new_user_data);
             res.send(new_user);
+            // console.log(JSON.stringify(commonRoomDetails._id));
+            
         }
         else{
             res.status(400).send('User already present');
         }
-        
     }
     catch(err){
         console.log(err.code);
@@ -53,12 +58,17 @@ router.post('/user', async (req, res) => {
 });
 
 // Update user deatils whenever needed
-router.put('/user/:name', async (req, res) => {
-    const user_name = req.params.name;
+router.put('/user/:id', async (req, res) => {
+    const user_id = req.params.id;
     const new_user_data = req.body;
     try{
-        const updated_user = await UserModel.find({userName : user_name}).update(new_user_data);
-        res.send(updated_user);
+        if(await UserModel.exists({_id : user_id})){
+            const updated_user = await UserModel.findByIdAndUpdate(user_id, new_user_data);
+            res.send("Updation successful");
+        }
+        else{
+            res.status(404).send('User data not found');
+        }
     }
     catch(err){
         res.status(500).send(err);
@@ -66,12 +76,17 @@ router.put('/user/:name', async (req, res) => {
 });
 
 // Update 'joinedRoomList' property of user
-router.put('/user/joinedRoom/:name' , async (req, res) => {
-    const user_name = req.params.name;
+router.put('/user/joinedRoom/:id' , async (req, res) => {
+    const user_id = req.params.id;
     const new_room_details = req.body;
     try{
-        const updated_user = await UserModel.find({userName : user_name}).update({$push : {joinedRoomList : new_room_details}});
-        res.send(updated_user);
+        if(await UserModel.exists({_id : user_id})){
+            const updated_user = await UserModel.findByIdAndUpdate(user_id, {$push : {joinedRoomList : new_room_details}});
+            res.send("Updation successful");
+        }
+        else{
+            res.status(404).send('User data not found');
+        }
     }
     catch(err){
         res.status(500).send(err);

@@ -1,7 +1,7 @@
 const joinedRoom = class{
     roomName = String;
     roomId = Object;
-    lastChattedTime = Object;
+    lastChattedTime = Date;
     constructor(roomName, roomId, lastChattedTime){
         this.roomId = roomId;
         this.roomName = roomName;

@@ -15,10 +15,10 @@ const roomSchema = mongoose.Schema({
         default : true
     },
 
-    // isMulticast : {
-    //     type : Boolean,
-    //     default : false
-    // },
+    isMulticast : {
+        type : Boolean,
+        default : false
+    },
 
     messageList : {
         type : Array
@@ -39,7 +39,7 @@ const create_and_get_common_room_details = async (room_name) => {
             return commonRoomDetails;
         }
         else{
-            commonRoomDetails = await RoomModel.find({roomName : room_name});
+            const commonRoomDetails = await RoomModel.find({roomName : room_name});
             return commonRoomDetails;
         }
     }
