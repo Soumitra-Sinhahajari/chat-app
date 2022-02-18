@@ -1,3 +1,4 @@
+import { useHistory } from "react-router-dom";
 import UserPane from "./UserPane";
 
 const SideBar = () => {
@@ -9,11 +10,17 @@ const SideBar = () => {
         userName: 'Ninja',
         isOnline: true
     }];
+    const History = useHistory();
+
+    const startChat = (e) => {
+        e.preventDefault();
+        History.push('/create');
+    };
 
     return (  
         <div className="side-bar">
             <header>
-                <button>Start New Chat</button>
+                <button onClick={startChat}>Start New Chat</button>
             </header>
             <ul>
                 {users.map((user) => (

@@ -5,6 +5,7 @@ import Home from './Home';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { useState } from 'react'
 import Room from './Room';
+import CreateRoom from './CreateRoom';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -20,8 +21,8 @@ function App() {
           <Route exact path='/'>
             <Login setUser={ setUser } />
           </Route>
-          <Route path='/roomtest'>
-            <Room />
+          <Route path='/create'>
+            <CreateRoom />
           </Route>
           <Route path='/home'>
             <Home />

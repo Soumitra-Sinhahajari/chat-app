@@ -66,7 +66,7 @@ const Login = (props) => {
             } else {
                 res = {is_present : true};
             }
-        })
+        })  
         .then((user)=>{
             if (user.is_present === true) {
                 setError('User id is taken. Choose a different user id.');
