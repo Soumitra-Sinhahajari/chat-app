@@ -73,7 +73,7 @@ router.put('/user/:id', async (req, res) => {
         }
     }
     catch(err){
-        res.status(500).send({errorMessage : err});
+        res.status(500).send({errorMessage : 'Internal Server Error'});
     }
 });
 
@@ -91,7 +91,7 @@ router.put('/user/joinedRoom/:id' , async (req, res) => {
         }
     }
     catch(err){
-        res.status(500).send({errorMessage : err});
+        res.status(500).send({errorMessage : 'Internal Server Error'});
     }
 });
 
