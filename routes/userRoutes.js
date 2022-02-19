@@ -5,26 +5,27 @@ const RoomModel = require('../models/Room');
 const router = express.Router();
 
 // Read user details at the time of login
-router.get('/user/:name', async (req, res) => {
+router.get('/user/:name/:passWd', async (req, res) => {
     const user_name = req.params.name;
-    const user_passwd = req.body.passwd;
+    const user_passwd = req.params.passWd;
     try{
         if(await UserModel.exists({userName : user_name})){
             const user_data = await UserModel.find({userName : user_name});
+            console.log(user_data[0]);
             if(user_passwd === user_data[0].passWd)
             {
                 res.send(user_data[0]);
             }
             else{
-                res.status(400).send('Invalid user credentials');
+                res.status(400).send({errorMessage : 'Invalid user credentials'});
             }
         }
         else{
-            res.status(404).send('User data not found');
+            res.status(404).send({errorMessage : 'User data not found'});
         }
     }
     catch(err){
-            res.status(500).send(err);
+            res.status(500).send({errorMessage : 'Internal Server Error'});
     }
 });
 
@@ -32,6 +33,7 @@ router.get('/user/:name', async (req, res) => {
 router.post('/user', async (req, res) => {
     const new_user_data = req.body;
     const last_message_time = null;
+    console.log('request received');
     if (commonRoomDetails.messageList.length > 0) {
         last_message_time = commonRoomDetails.messageList[messageList.length - 1];
     }
@@ -48,12 +50,12 @@ router.post('/user', async (req, res) => {
             
         }
         else{
-            res.status(400).send('User already present');
+            res.status(400).send({errorMessage : 'User already present'});
         }
     }
     catch(err){
         console.log(err.code);
-        res.status(500).send(err);
+        res.status(500).send({errorMessage : 'Internal Server Error'});
     }
 });
 
@@ -67,11 +69,11 @@ router.put('/user/:id', async (req, res) => {
             res.send("Updation successful");
         }
         else{
-            res.status(404).send('User data not found');
+            res.status(404).send({errorMessage : 'User data not found'});
         }
     }
     catch(err){
-        res.status(500).send(err);
+        res.status(500).send({errorMessage : err});
     }
 });
 
@@ -85,11 +87,11 @@ router.put('/user/joinedRoom/:id' , async (req, res) => {
             res.send("Updation successful");
         }
         else{
-            res.status(404).send('User data not found');
+            res.status(404).send({errorMessage : 'User data not found'});
         }
     }
     catch(err){
-        res.status(500).send(err);
+        res.status(500).send({errorMessage : err});
     }
 });
 
