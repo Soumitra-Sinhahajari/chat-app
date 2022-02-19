@@ -12,39 +12,33 @@ const Login = (props) => {
     const [Error, setError] = useState(null);
     const History = useHistory();
 
-    const enterLoginButtonClicked = (e) => {
+    const enterLoginButtonClicked =  async (e) => {
         e.preventDefault();
         console.log(newUserName);
         if(newUserName === null){
             setError('Please enter an user id!');
         }
-        fetch('http://localhost:8000/api/user/'+newUserName)
-        .then((res)=>{
-            if (res.status !== 404 && res.status !== 500) {
-                res = res.json();
-            } else {
-                res = {is_present : false};
-            }
-        })
-        .then((user)=>{
-            if(user.is_present === false){
-                setError('User not found.');
-            }
-            else{
-                if (user.passWd === password) {
-                    setUser(user);
-                    History.push('/home');
-                } else {
-                    setError('Wrong Password.');
-                }
-            }
-        })
-        .catch((err)=>{
-            console.log(err.message);
+        const res = await fetch('http://localhost:8000/api/user/'+newUserName+'/'+password, {
+            method : 'GET',
+            headers : { 'Content-Type' : 'application/json' }
         });
+        if (res.status !== 400 && res.status !== 404 && res.status !== 500) {
+            const user = await res.json();
+            console.log(user);
+            setUser(user);
+            History.push('/home');
+        } else {
+            const data = await res.json();
+            console.log(data);
+            setError(data.errorMessage);
+        }
+        // .catch((err)=>{
+        //     console.log('Error');
+        //     console.log(err.message);
+        // });
     };
 
-    const enterRegisterButtonClicked = (e) => {
+    const enterRegisterButtonClicked = async (e) => {
         e.preventDefault();
         console.log(newUserName);
         const user = {
@@ -55,29 +49,22 @@ const Login = (props) => {
         if(newUserName === null){
             setError('Please enter an user id!');
         }
-        fetch('http://localhost:8000/api/user', {
+        const res = await fetch('http://localhost:8000/api/user', {
             method : 'POST',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify(user)
-        })
-        .then((res)=>{
-            if (res.status !== 400 && res.status !== 500) {
-                res = res.json();
-            } else {
-                res = {is_present : true};
-            }
-        })  
-        .then((user)=>{
-            if (user.is_present === true) {
-                setError('User id is taken. Choose a different user id.');
-            } else {
-                setUser(user);
-                History.push('/home');
-            }
-        })
-        .catch((err)=>{
-            console.log(err.message);
         });
+        if (res.status !== 400 && res.status !== 500) {
+            const user = await res.json();
+            setUser(user);
+            History.push('/home');
+        } else {
+            setError('User id is taken. Choose a different user id.');
+        }
+        // .catch((err)=>{
+        //     console.log('Error');
+        //     console.log(err.message);
+        // });
     };
 
     return (

@@ -1,15 +1,13 @@
 import { useHistory } from "react-router-dom";
 import UserPane from "./UserPane";
 
-const SideBar = () => {
+const SideBar = (props) => {
 
-    const users = [{
-        userName: 'Shawn',
-        isOnline: false
-    }, {
-        userName: 'Ninja',
-        isOnline: true
-    }];
+    const user = props.user;
+
+    const users = user.joinedRoomList;
+    console.log(users);
+
     const History = useHistory();
 
     const startChat = (e) => {
@@ -25,7 +23,7 @@ const SideBar = () => {
             <ul>
                 {users.map((user) => (
                     <li>
-                        <UserPane user={user} />
+                        <UserPane room={user} />
                     </li>
                 ))}
             </ul>

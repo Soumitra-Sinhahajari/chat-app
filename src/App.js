@@ -1,10 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import Login from './Login';
 import Home from './Home';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import { useState } from 'react'
-import Room from './Room';
 import CreateRoom from './CreateRoom';
 
 function App() {
@@ -22,10 +20,10 @@ function App() {
             <Login setUser={ setUser } />
           </Route>
           <Route path='/create'>
-            <CreateRoom />
+            <CreateRoom user={ user } setUser={ setUser }/>
           </Route>
           <Route path='/home'>
-            <Home />
+            <Home user={ user } />
           </Route>
         </Switch>
       </BrowserRouter>
