@@ -23,7 +23,7 @@ function App() {
             <CreateRoom user={ user } setUser={ setUser }/>
           </Route>
           <Route path='/home'>
-            <Home user={ user } />
+            <Home user={ user } setUser={ setUser } />
           </Route>
         </Switch>
       </BrowserRouter>

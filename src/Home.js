@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 
 const Home = (props)=>{
     const user = props.user;
+    const setUser = props.setUser;
     let socket = null;
 
     const History = useHistory();
@@ -15,7 +16,7 @@ const Home = (props)=>{
         socket = io.connect('http://localhost:8000');
         console.log('socket connected');
         socket.emit('trying-to-connect', {
-            userID : user._id
+            userName : user.userName
         });
 
         socket.on('success', () => {
@@ -25,16 +26,22 @@ const Home = (props)=>{
         socket.on('error', () => {
             // Insert Error Page
             socket.emit('leaving', {
-                userID : user._id   
+                userName : user.userName   
             });
         });
 
         socket.on('disconnect', () => {
             socket.disconnect();
             History.push('/404');
+        });
+
+        socket.on('message', {
+
         })
 
     }, [user]);
+
+
 
     const handleTabClosing = () => {
 
@@ -43,7 +50,7 @@ const Home = (props)=>{
         e.preventDefault();
         console.log(user._id);
         socket.emit('leaving', {
-            userID : user._id
+            userName : user.userName
         });
         e.returnValue = 'You are being logged out.';
     };

@@ -56,7 +56,7 @@ const CreateRoom = (props) => {
             const joinedRoom = {
                 roomName : room.roomName,
                 roomId : room._id,
-                lastChattedTime : null
+                // lastChattedTime : null
             };
             const res2 = await fetch('http://localhost:8000/api/user/joinedRoom/'+user._id, {
                 method : 'PUT',
