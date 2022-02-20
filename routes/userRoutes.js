@@ -52,12 +52,13 @@ router.post('/user', async (req, res) => {
     const new_user_data = req.body;
     const last_message_time = null;
     console.log('request received');
+    console.log(commonRoomDetails);
     if (commonRoomDetails.messageList.length > 0) {
         last_message_time = commonRoomDetails.messageList[messageList.length - 1];
     }
     new_user_data.joinedRoomList.push({
         roomName : commonRoomDetails.roomName,
-        roomId : commonRoomDetails._id,
+        roomId : JSON.stringify(commonRoomDetails._id),
         lastChattedTime : last_message_time
     })
     try{
