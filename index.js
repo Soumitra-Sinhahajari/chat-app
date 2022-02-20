@@ -57,9 +57,9 @@ create_and_get_common_room_details("Common chat room")
             }
             else{
                 const user_info = {
-                                    userID = info.userID,
-                                    isOnline = true,
-                                    socketID = socket.id
+                                    userID : info.userID,
+                                    isOnline : true,
+                                    socketID : socket.id
                                 };
                 userList.push(user_info);
                 socket.emit('success',{message : 'User connected successfully'});
