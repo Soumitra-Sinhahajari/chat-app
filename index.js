@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const user_routes = require('./routes/userRoutes');
 const room_routes = require('./routes/roomRoutes');
 const socket = require('socket.io');
@@ -12,9 +13,11 @@ const {RoomModel, create_and_get_common_room_details} = require('./models/Room')
 //     socketID : 'Will store the socket id (if online)',
 //     isOnline : 'Boolean value to check if user is online',
 // }
-const userList = Array;
+const userList = [];
 
 mongoose.connect('mongodb+srv://soumitra:1234@primarycluster.yssrr.mongodb.net/TrialDB');
+
+app.use(cors({ credetials : true}));
 
 app.use(express.json());
 
@@ -38,7 +41,22 @@ create_and_get_common_room_details("Common chat room")
         console.log('Server started successfully');
     });
 
-    const io = socket(server);
+    const io = socket(server, {
+        cors : {
+            origins : ["*"],
+            handlePreflightRequest : (req, res) => {
+                res.writeHead(200, {
+                    "Access-Control-Allow-Origin" : "*",
+                    // "Access-Control-Allow-Methods" : "GET, POST, PUT, DELETE",
+                    "Access-Control-Allow-Headers" : "Content-Type",
+                    "Access-Control-Allow-Credentials" : true
+                });
+                res.end();
+            }
+        }
+    });
+
+    // io.use(cors());
 
     io.on('connection', (socket) => {
 
@@ -53,6 +71,7 @@ create_and_get_common_room_details("Common chat room")
                     userList[user_index].isOnline = true;
                     userList[user_index].socketID = socket.id;
                     socket.emit('success',{message : 'User connected successfully'});
+                    console.log('Connected Successfully' + socket.id);
                 }
             }
             else{
@@ -63,6 +82,7 @@ create_and_get_common_room_details("Common chat room")
                                 };
                 userList.push(user_info);
                 socket.emit('success',{message : 'User connected successfully'});
+                console.log('Connected Successfully' + socket.id);
             }
         }); 
 
@@ -71,6 +91,7 @@ create_and_get_common_room_details("Common chat room")
             userList[user_index].isOnline = false;
             userList[user_index].socketID = null;
             socket.disconnect();
+            console.log('Disconnected Successfully' + socket.id);
         });
 
         
