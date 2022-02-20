@@ -9,8 +9,8 @@ const {RoomModel, create_and_get_common_room_details} = require('./models/Room')
 
 //  user-socket list structure here
 // {
-//     userID   : 'Will store the unique user name', 
-//     socketID : 'Will store the socket id (if online)',
+//     userName : 'Will store the unique user name', 
+//     socket   : 'Will store the socket (if online)',
 //     isOnline : 'Boolean value to check if user is online',
 // }
 const userList = [];
@@ -61,25 +61,25 @@ create_and_get_common_room_details("Common chat room")
     io.on('connection', (socket) => {
 
         socket.on('trying-to-connect', (info) => {
-            const isPresent = userList.some(data => data.userID === info.userID);
+            const isPresent = userList.some(data => data.userName === info.userName);
             console.log(isPresent);
             if(isPresent){
-                const user_index = userList.findIndex(data => data.userID === info.userID);
+                const user_index = userList.findIndex(data => data.userName === info.userName);
                 if(userList[user_index].isOnline === true){
                     socket.emit('error',{message : 'Already connected'});
                 }
                 else{
                     userList[user_index].isOnline = true;
-                    userList[user_index].socketID = socket.id;
+                    userList[user_index].socket = socket;
                     socket.emit('success',{message : 'User connected successfully'});
                     console.log('Connected Successfully' + socket.id);
                 }
             }
             else{
                 const user_info = {
-                                    userID : info.userID,
+                                    userName : info.userName,
                                     isOnline : true,
-                                    socketID : socket.id
+                                    socket : socket
                                 };
                 userList.push(user_info);
                 console.log(userList);
@@ -89,14 +89,26 @@ create_and_get_common_room_details("Common chat room")
         }); 
 
         socket.on('leaving', (info) => {
-            const user_index = userList.findIndex(data => data.userID === info.userID);
+            const user_index = userList.findIndex((data) => {data.userName === info.userName;});
             userList[user_index].isOnline = false;
-            userList[user_index].socketID = null;
+            userList[user_index].socket = null;
             socket.disconnect();
             console.log('Disconnected Successfully' + socket.id);
         });
 
-        
+        socket.on('message', (info) => {
+            const send_data = {
+                roomId : info.roomId,
+                message : info.message
+            };
+
+            info.userList.forEach((user) => {
+                const user_index = userList.findIndex(data => data.userName === user.userName);
+                if(userList[user_index] === true){
+                    userList[user_index].socket.emit('message',send_data);
+                }
+            });
+        });
     });
 }).catch((err)=>{
     console.log("Error is : ",err.message);
