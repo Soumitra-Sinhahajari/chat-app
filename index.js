@@ -89,7 +89,7 @@ create_and_get_common_room_details("Common chat room")
         }); 
 
         socket.on('leaving', (info) => {
-            const user_index = userList.findIndex((data) => {data.userName === info.userName;});
+            const user_index = userList.findIndex(data => data.userName === info.userName);
             userList[user_index].isOnline = false;
             userList[user_index].socket = null;
             socket.disconnect();
