@@ -57,7 +57,18 @@ const Login = (props) => {
         if (res.status !== 400 && res.status !== 500) {
             const user = await res.json();
             setUser(user);
-            History.push('/home');
+            const commonRoomId = user.joinedRoomList[0].roomId;
+            const data = await fetch('http://localhost:8000/api/room/userList/'+commonRoomId, {
+                method : 'PUT',
+                headers : { 'Content-Type' : 'application/json' },
+                body : JSON.stringify({newUser : user.userName})
+            });
+            if (data.status !== 404 && data.status !== 500) {
+                History.push('/home');
+            } else {    
+                const error = await data.json();
+                setError(error.errorMessage);
+            }
         } else {
             setError('User id is taken. Choose a different user id.');
         }
