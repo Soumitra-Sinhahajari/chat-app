@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import './CreateRoom.css';
 
 const CreateRoom = (props) => {
     const user = props.user;
@@ -28,7 +29,10 @@ const CreateRoom = (props) => {
 
     const createRoom = async (e) => {
         e.preventDefault();
-        setUserList(userList => [userName, ...userList]);
+        const dummyUserList = userList;
+        dummyUserList.push(user.userName);
+        setUserList(userList => [...userList, userName]);
+        console.log(dummyUserList);
         let isMulticast = false;
         if(userList.length > 2) {
             isMulticast = true;
@@ -36,7 +40,7 @@ const CreateRoom = (props) => {
 
         const room = {
             roomName : roomName,
-            userList : userList,
+            userList : dummyUserList,
             isBroadcast : false,
             isMulticast : isMulticast,
             messageList : []
@@ -84,7 +88,7 @@ const CreateRoom = (props) => {
             <br></br><label>Enter username to add member:</label>
             <input type="text" id="username-input" onChange={(e) => setUserName(e.target.value)}></input>
             <button onClick={addMember}>Add Member</button>
-            <li>
+            <ul>
                 {userList.map((username) => (
                    <li>
                        <div class="container">
@@ -92,7 +96,7 @@ const CreateRoom = (props) => {
                        </div>
                    </li> 
                 ))}
-            </li>
+            </ul>
             <button onClick={createRoom}>Create Room</button>
         </div>
     );
