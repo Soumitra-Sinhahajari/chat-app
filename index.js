@@ -61,9 +61,10 @@ create_and_get_common_room_details("Common chat room")
     io.on('connection', (socket) => {
 
         socket.on('trying-to-connect', (info) => {
-            const isPresent = userList.some((data) => {data.userID === info.userID;});
+            const isPresent = userList.some(data => data.userID === info.userID);
+            console.log(isPresent);
             if(isPresent){
-                const user_index = userList.findIndex((data) => {data.userID === info.userID;});
+                const user_index = userList.findIndex(data => data.userID === info.userID);
                 if(userList[user_index].isOnline === true){
                     socket.emit('error',{message : 'Already connected'});
                 }
@@ -81,13 +82,14 @@ create_and_get_common_room_details("Common chat room")
                                     socketID : socket.id
                                 };
                 userList.push(user_info);
+                console.log(userList);
                 socket.emit('success',{message : 'User connected successfully'});
                 console.log('Connected Successfully' + socket.id);
             }
         }); 
 
         socket.on('leaving', (info) => {
-            const user_index = userList.findIndex((data) => {data.userID === info.userID;});
+            const user_index = userList.findIndex(data => data.userID === info.userID);
             userList[user_index].isOnline = false;
             userList[user_index].socketID = null;
             socket.disconnect();
