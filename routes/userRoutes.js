@@ -4,6 +4,25 @@ const RoomModel = require('../models/Room');
 
 const router = express.Router();
 
+// Check if username exists or not
+router.get('/usercheck/:name', async (req, res) => {
+    const user_name = req.params.name;
+    try{
+        if(await UserModel.exists({userName : user_name})){
+            const user_data = await UserModel.find({userName : user_name});
+            console.log(user_data[0].userName);
+            res.send(user_data[0].userName);
+        }
+        else{
+            res.status(404).send({errorMessage : 'User not found'});
+        }
+    }
+    catch(err){
+            res.status(500).send({errorMessage : 'Internal Server Error'});
+    }
+});
+
+
 // Read user details at the time of login
 router.get('/user/:name/:passWd', async (req, res) => {
     const user_name = req.params.name;
@@ -11,7 +30,6 @@ router.get('/user/:name/:passWd', async (req, res) => {
     try{
         if(await UserModel.exists({userName : user_name})){
             const user_data = await UserModel.find({userName : user_name});
-            console.log(user_data[0]);
             if(user_passwd === user_data[0].passWd)
             {
                 res.send(user_data[0]);

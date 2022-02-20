@@ -11,11 +11,11 @@ router.get('/room/:id', async (req, res) => {
             res.send(room_data[0]);
         }
         else{
-            res.status(404).send('Room data not found');
+            res.status(404).send({errorMessage : 'Room data not found'});
         }
     }
     catch(err){
-            res.status(500).send(err);
+            res.status(500).send({errorMessage : 'Internal Server Error'});
     }
 });
 
@@ -27,7 +27,7 @@ router.post('/room', async (req, res) => {
     }
     catch(err){
         console.log(err.code);
-        res.status(500).send(err);
+        res.status(500).send({errorMessage : 'Internal Server Error'});
     }
 });
 
@@ -40,11 +40,11 @@ router.put('/room/messageList/:id', async (req, res) => {
             res.send("Updation successful");
         }
         else{
-            res.status(404).send('Room data not found');
+            res.status(404).send({errorMessage : 'Room data not found'});
         }
     }
     catch(err){
-            res.status(500).send(err);
+            res.status(500).send({errorMessage : 'Internal Server Error'});
     }
 });
 
@@ -57,11 +57,11 @@ router.put('/room/userList/:id', async (req, res) => {
             res.send("Updation successful");
         }
         else{
-            res.status(404).send('Room data not found');
+            res.status(404).send({errorMessage : 'Room data not found'});
         }
     }
     catch(err){
-            res.status(500).send(err);
+            res.status(500).send({errorMessage : 'Internal Server Error'});
     }
 });
 
@@ -74,11 +74,11 @@ router.delete('/room/userList/:id', async (req, res) => {
             res.send("Deletion successful");
         }
         else{
-            res.status(404).send('Room data not found');
+            res.status(404).send({errorMessage : 'Room data not found'});
         }
     }
     catch(err){
-            res.status(500).send(err);
+            res.status(500).send({errorMessage : 'Internal Server Error'});
     }
 });
 
