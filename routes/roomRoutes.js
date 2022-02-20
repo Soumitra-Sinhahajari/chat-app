@@ -37,7 +37,7 @@ router.put('/room/messageList/:id', async (req, res) => {
     try{
         if(await RoomModel.exists({_id : roomId})){
             const updated_room_data = await RoomModel.find({_id : roomId}).updateOne({$push : {messageList : new_message}});
-            res.send("Updation successful");
+            res.send({userList : updated_room_data.userList});
         }
         else{
             res.status(404).send({errorMessage : 'Room data not found'});
