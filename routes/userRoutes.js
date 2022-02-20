@@ -4,8 +4,19 @@ const RoomModel = require('../models/Room');
 
 const router = express.Router();
 
+// Get room list with last chatted time
+router.get('/user/roomList', (req, res) => {
+    const user_room_list = req.body.joinedRoomList;
+    let new_room_list = [];
+    user_room_list.forEach(element => {
+        const room_index = global.roomList.findIndex( room => room.roomId === element.roomId );
+        new_room_list.push(global.roomList[room_index]);
+    });
+    res.send(new_room_list);
+});
+
 // Check if username exists or not
-router.get('/usercheck/:name', async (req, res) => {
+router.get('/user/check/:name', async (req, res) => {
     const user_name = req.params.name;
     try{
         if(await UserModel.exists({userName : user_name})){

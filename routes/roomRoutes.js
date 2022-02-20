@@ -3,6 +3,15 @@ const { RoomModel } = require('../models/Room');
 
 const router = express.Router();
 
+// roomList to get last chatted time and sort side pane
+// {
+//     roomName : 'To get the room name'
+//     roomId : 'To get the room id'
+//     lastChattedTime : 'To get the last chatted time'
+// }
+
+global.roomList = [];
+
 router.get('/room/:id', async (req, res) => {
     const roomId = req.params.id;
     try{
@@ -21,8 +30,23 @@ router.get('/room/:id', async (req, res) => {
 
 router.post('/room', async (req, res) => {
     const new_room_data = req.body;
+
+    
+
     try{
         const new_room = await RoomModel.create(new_room_data);
+
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+        let write_room;
+        write_room.roomName = new_room_data.roomName;
+        write_room.roomId = new_room._id;
+        // have to see this...sort e lagbe
+        write_room.lastChattedTime = dateTime;
+        global.roomList.push(write_room);
+
         res.send(new_room);
     }
     catch(err){
@@ -37,6 +61,10 @@ router.put('/room/messageList/:id', async (req, res) => {
     try{
         if(await RoomModel.exists({_id : roomId})){
             const updated_room_data = await RoomModel.find({_id : roomId}).updateOne({$push : {messageList : new_message}});
+            
+            const room_index = global.roomList.findIndex( data => data.roomId === roomId );
+            global.roomList[room_index].lastChattedTime = new_message.time;
+            
             res.send({userList : updated_room_data.userList});
         }
         else{
