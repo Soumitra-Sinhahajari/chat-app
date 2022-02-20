@@ -1,34 +1,55 @@
 import io from 'socket.io-client';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import './Home.css';
 import Room from './Room';
 import SideBar from './SideBar';
+import { useHistory } from 'react-router-dom';
 
 const Home = (props)=>{
     const user = props.user;
-    const [socket, setSocket] = useState(null);
+    let socket = null;
+
+    const History = useHistory();
 
     useEffect(() => {
-        const dummySocket = io.connect('http://localhost:8000');
-        setSocket(dummySocket);
+        socket = io.connect('http://localhost:8000');
         console.log('socket connected');
-        dummySocket.emit('trying-to-connect', {
+        socket.emit('trying-to-connect', {
             userID : user._id
         });
 
-        dummySocket.on('success', () => {
+        socket.on('success', () => {
             console.log('Success at Frontend too.')
         });
 
-        dummySocket.on('error', () => {
+        socket.on('error', () => {
             // Insert Error Page
-            dummySocket.emit('leaving', {
+            socket.emit('leaving', {
                 userID : user._id   
             });
         });
 
+        socket.on('disconnect', () => {
+            socket.disconnect();
+            History.push('/404');
+        })
+
     }, [user]);
 
+    const handleTabClosing = () => {
+
+    };
+    const unloadCallback = (e) => {
+        e.preventDefault();
+        console.log(user._id);
+        socket.emit('leaving', {
+            userID : user._id
+        });
+        e.returnValue = 'You are being logged out.';
+    };
+
+    window.addEventListener('beforeunload', unloadCallback);
+    window.addEventListener('unload', handleTabClosing);
 
     console.log(user);
 
