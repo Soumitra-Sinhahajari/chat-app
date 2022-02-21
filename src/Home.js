@@ -1,14 +1,17 @@
 import io from 'socket.io-client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './Home.css';
 import Room from './Room';
 import SideBar from './SideBar';
-import { useHistory } from 'react-router-dom';
+// import { Router } from '@reach/react';
+import { BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
 
 const Home = (props)=>{
     const user = props.user;
     const setUser = props.setUser;
     let socket = null;
+
+    const [room, setRoom] = useState(null);
 
     const History = useHistory();
 
@@ -80,10 +83,17 @@ const Home = (props)=>{
             <h1 align="center">{user.userName}!</h1>
             <div id="container">
                 <aside>
-                    <SideBar user={ user } />
+                    <SideBar user={ user } room={ room } setRoom={ setRoom } />
                 </aside>
                 <main>
-                    <Room user={ user } socket={ socket } />
+                    <Room user={ user } room={ room } socket={ socket } />
+                    {/* <BrowserRouter>
+                        <Switch>
+                            <Route exact path="/home/:roomId">
+                                <
+                            </Route>
+                        </Switch>
+                    </BrowserRouter> */}
                 </main>
             </div>
         </div>

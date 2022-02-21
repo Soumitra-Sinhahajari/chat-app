@@ -14,7 +14,7 @@ const CreateRoom = (props) => {
     const addMember = async (e) => {
         e.preventDefault();
         // Check if valid username using api
-        const res = await fetch('http://localhost:8000/api/usercheck/'+userName);
+        const res = await fetch('http://localhost:8000/api/user/check/'+userName);
         if (res.status !== 404 && res.status !== 500) {
             // const data = await res.json();
             // console.log(data);

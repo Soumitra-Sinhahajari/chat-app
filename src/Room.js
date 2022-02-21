@@ -2,35 +2,37 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Message from "./Message";
 
-const Room = ({user, socket}) => {
-    const {roomId} = useParams();
+const Room = ({user, room, socket}) => {
+    // const {roomId} = useParams();
+    // console.log(roomId);
 
     const {messageList, setMessageList} = useState([]);
 
-    const {room, setRoom} = useState(null);
+    // const {room, setRoom} = useState(null);
     const {sendButtonClicks, setSendButtonClicks} = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost:8000/api/room' + roomId)
-        .then(res => {
-            if (res.status !== 404 && res.status !== 500)
-                return res.json();
-            else
-                throw Error('Could not fetch room data.');
-        })
-        .then(room => {
-            setRoom(room);
+        if (room != null)
             setMessageList(room.messageList);
-        });
-    }, [sendButtonClicks]);
-
-    // const user = fetch('http://localhost:8000/api/user/' + id);
-    const [currentMessage, setCurrentMessage] = useState('');
-    // const user = {
+        // fetch('http://localhost:8000/api/room' + roomId)
+        // .then(res => {
+        //     if (res.status !== 404 && res.status !== 500)
+        //         return res.json();
+        //     else
+        //         throw Error('Could not fetch room data.');
+        // })
+        // .then(room => {
+        //     setRoom(room);// const user = {
     //     userName: 'John',
     //     isOnline: true
     // };
 
+        //     setMessageList(room.messageList);
+        // });
+    }, [sendButtonClicks]);
+
+    const [currentMessage, setCurrentMessage] = useState('');
+    
     var today = new Date();
     var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
@@ -64,7 +66,7 @@ const Room = ({user, socket}) => {
     <div className="chat-window">
         <div className="chat-header">
             <div className="user-name">
-                <p>{user.userName}</p>
+                <p>{room && room.roomName}</p>
             </div>
             {/* <div className="online-status">
                 {user.isOnline && <p>Online</p>}
