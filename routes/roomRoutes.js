@@ -10,8 +10,6 @@ const router = express.Router();
 //     lastChattedTime : 'To get the last chatted time'
 // }
 
-global.roomList = [];
-
 router.get('/room/:id', async (req, res) => {
     const roomId = req.params.id;
     try{
@@ -31,22 +29,28 @@ router.get('/room/:id', async (req, res) => {
 router.post('/room', async (req, res) => {
     const new_room_data = req.body;
 
-    
-
     try{
-        const new_room = await RoomModel.create(new_room_data);
-
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
         var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
         var dateTime = date+' '+time;
-        let write_room;
-        write_room.roomName = new_room_data.roomName;
-        write_room.roomId = new_room._id;
-        // have to see this...sort e lagbe
-        write_room.lastChattedTime = dateTime;
-        global.roomList.push(write_room);
 
+        new_room_data.messageList.push({
+            from : 'none',
+            body : 'Room creation time',
+            time : dateTime
+        });
+        const new_room = await RoomModel.create(new_room_data);
+
+        
+        let write_room = {
+                            roomName : new_room_data.roomName,
+                            roomId : JSON.parse(JSON.stringify(new_room._id)),
+                            lastChattedTime : dateTime
+                        };
+        global.roomList.push(write_room);
+        console.log(new_room);
+        console.log(global.roomList);
         res.send(new_room);
     }
     catch(err){
@@ -57,7 +61,7 @@ router.post('/room', async (req, res) => {
 
 router.put('/room/messageList/:id', async (req, res) => {
     const roomId = req.params.id;
-    const new_message = req.body.newMessage;
+    const new_message = req.body;
     try{
         if(await RoomModel.exists({_id : roomId})){
             const updated_room_data = await RoomModel.find({_id : roomId}).updateOne({$push : {messageList : new_message}});
@@ -78,10 +82,11 @@ router.put('/room/messageList/:id', async (req, res) => {
 
 router.put('/room/userList/:id', async (req, res) => {
     const roomId = req.params.id;
-    const new_user = req.body.newUser;
+    const new_user = req.body;
     try{
         if(await RoomModel.exists({_id : roomId})){
             const updated_room_data = await RoomModel.find({_id : roomId}).updateOne({$push : {userList : new_user}});
+            console.log(new_user);
             res.send("Updation successful");
         }
         else{
@@ -95,10 +100,10 @@ router.put('/room/userList/:id', async (req, res) => {
 
 router.delete('/room/userList/:id', async (req, res) => {
     const roomId = req.params.id;
-    const user_name = req.body.userName;
+    const deleting_user = req.body;
     try{
         if(await RoomModel.exists({_id : roomId})){
-            const updated_room_data = await RoomModel.find({_id : roomId}).updateOne({$pull : {userList : user_name}});
+            const updated_room_data = await RoomModel.find({_id : roomId}).updateOne({$pull : {userList : deleting_user}});
             res.send("Deletion successful");
         }
         else{

@@ -35,8 +35,20 @@ app.use('/api', room_routes);
 
 
 create_and_get_common_room_details("Common chat room")
-.then((res) => {
-    global.commonRoomDetails = res[0];
+.then(async (res) => {
+    global.commonRoomDetails = res;
+    console.log(commonRoomDetails);
+    global.roomList = [];
+    const all_room = await RoomModel.find({});
+    all_room.forEach((data) => {
+        global.roomList.push({
+            roomName : data.roomName,
+            roomId : JSON.parse(JSON.stringify(data._id)),
+            lastChattedTime : data.messageList[data.messageList.length - 1].time
+        });
+    });
+
+    console.log(roomList);
     const server = app.listen(8000, ()=>{
         console.log('Server started successfully');
     });

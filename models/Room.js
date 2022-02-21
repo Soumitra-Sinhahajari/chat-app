@@ -30,17 +30,25 @@ const RoomModel = mongoose.model('room',roomSchema);
 const create_and_get_common_room_details = async (room_name) => {
     try{
         if(!await RoomModel.exists({roomName : room_name})){
+            var today = new Date();
+            var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var dateTime = date+' '+time;
             const commonRoomDetails = await RoomModel.create({
                 roomName : room_name,
                 userList : [],
                 isBroadcast : true,
-                messageList : []
+                messageList : [{
+                    from : 'none',
+                    body : 'Room creation time',
+                    time : dateTime
+                }]
             });
             return commonRoomDetails;
         }
         else{
             const commonRoomDetails = await RoomModel.find({roomName : room_name});
-            return commonRoomDetails;
+            return commonRoomDetails[0];
         }
     }
     catch(err){

@@ -7,9 +7,11 @@ const router = express.Router();
 // Get room list with last chatted time
 router.get('/user/roomList', (req, res) => {
     const user_room_list = req.body.joinedRoomList;
+    console.log(user_room_list);
     let new_room_list = [];
     user_room_list.forEach(element => {
         const room_index = global.roomList.findIndex( room => room.roomId === element.roomId );
+        console.log(room_index);
         new_room_list.push(global.roomList[room_index]);
     });
     res.send(new_room_list);
@@ -61,16 +63,10 @@ router.get('/user/:name/:passWd', async (req, res) => {
 // Create new user at the time of registration
 router.post('/user', async (req, res) => {
     const new_user_data = req.body;
-    const last_message_time = null;
     console.log('request received');
     console.log(commonRoomDetails);
-    if (commonRoomDetails.messageList.length > 0) {
-        last_message_time = commonRoomDetails.messageList[messageList.length - 1];
-    }
     new_user_data.joinedRoomList.push({
-        roomName : commonRoomDetails.roomName,
-        roomId : JSON.stringify(commonRoomDetails._id),
-        lastChattedTime : last_message_time
+        roomId : JSON.parse(JSON.stringify(commonRoomDetails._id)),
     })
     try{
         if(!await UserModel.exists({userName : new_user_data.userName})){
@@ -115,6 +111,23 @@ router.put('/user/joinedRoom/:id' , async (req, res) => {
         if(await UserModel.exists({_id : user_id})){
             const updated_user = await UserModel.findByIdAndUpdate(user_id, {$push : {joinedRoomList : new_room_details}});
             res.send("Updation successful");
+        }
+        else{
+            res.status(404).send({errorMessage : 'User data not found'});
+        }
+    }
+    catch(err){
+        res.status(500).send({errorMessage : 'Internal Server Error'});
+    }
+});
+
+router.delete('/user/joinedRoom/:id', async (req, res) => {
+    const user_id = req.params.id;
+    const deleting_room = req.body;
+    try{
+        if(await UserModel.exists({_id : user_id})){
+            const updated_user = await UserModel.findByIdAndUpdate(user_id, {$pull : {joinedRoomList : deleting_room}});
+            res.send("Deletion successful");
         }
         else{
             res.status(404).send({errorMessage : 'User data not found'});
