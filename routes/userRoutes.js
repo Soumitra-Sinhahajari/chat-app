@@ -66,6 +66,7 @@ router.post('/user', async (req, res) => {
     console.log('request received');
     console.log(commonRoomDetails);
     new_user_data.joinedRoomList.push({
+        roomName : commonRoomDetails.roomName,
         roomId : JSON.parse(JSON.stringify(commonRoomDetails._id)),
     })
     try{

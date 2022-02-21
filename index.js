@@ -15,7 +15,15 @@ const {RoomModel, create_and_get_common_room_details} = require('./models/Room')
 // }
 const userList = [];
 
-mongoose.connect('mongodb+srv://soumitra:1234@primarycluster.yssrr.mongodb.net/TrialDB');
+// mongoose.connect('mongodb+srv://soumitra:1234@primarycluster.yssrr.mongodb.net/TrialDB');
+mongoose.connect('mongodb://localhost:27017/chatapptrialdb', 
+    {
+        authSource: "admin",
+        "user": "kdjonty",
+        "pass": "jakeperalta99"
+    }
+);
+mongoose.Promise = global.Promise;
 
 app.use(cors({ credetials : true}));
 
