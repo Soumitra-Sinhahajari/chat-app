@@ -121,6 +121,46 @@ create_and_get_common_room_details("Common chat room")
                 }
             });
         });
+
+        socket.on('room created', (info) => {
+            const new_room_index = global.roomList.findIndex(data => data.roomId === info.roomId);
+            const new_room_details = global.roomList[new_room_index];
+
+            info.userList.forEach((user) => {
+                const user_index = userList.findIndex(data => data.userName === user.userName);
+                if(userList[user_index] === true){
+                    userList[user_index].socket.emit('room created', new_room_details);
+                }
+            });
+        });
+
+        socket.on('user joined room', (info) => {
+            const send_data = {
+                roomId : info.roomId,
+                userName : info.userName
+            };
+
+            info.userList.forEach((user) => {
+                const user_index = userList.findIndex(data => data.userName === user.userName);
+                if(userList[user_index] === true){
+                    userList[user_index].socket.emit('user joined room',send_data);
+                }
+            });
+        });
+
+        socket.on('user left room', (info) => {
+            const send_data = {
+                roomId : info.roomId,
+                userName : info.userName
+            };
+
+            info.userList.forEach((user) => {
+                const user_index = userList.findIndex(data => data.userName === user.userName);
+                if(userList[user_index] === true){
+                    userList[user_index].socket.emit('user left room',send_data);
+                }
+            });
+        });
     });
 }).catch((err)=>{
     console.log("Error is : ",err.message);
