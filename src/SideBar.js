@@ -15,6 +15,12 @@ const SideBar = (props) => {
         History.push('/create');
     };
 
+    const clickRoom = (e) => {
+        e.preventDefault();
+        // Room redirect(history)
+        console.log('mauj');
+    };
+
     return (  
         <div className="side-bar">
             <header>
@@ -23,7 +29,9 @@ const SideBar = (props) => {
             <ul>
                 {users.map((user) => (
                     <li>
-                        <UserPane room={user} />
+                        <div onClick={clickRoom}>
+                            <UserPane room={user} />
+                        </div>
                     </li>
                 ))}
             </ul>

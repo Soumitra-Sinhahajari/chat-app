@@ -41,7 +41,13 @@ const Home = (props)=>{
 
     }, [user]);
 
+    useEffect(() => {
+        if (socket !== null) {
+            socket.on('message', () => {
 
+            });
+        }
+    });
 
     const handleTabClosing = () => {
 
@@ -77,7 +83,7 @@ const Home = (props)=>{
                     <SideBar user={ user } />
                 </aside>
                 <main>
-                    <Room />
+                    <Room user={ user } socket={ socket } />
                 </main>
             </div>
         </div>

@@ -1,9 +1,29 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Message from "./Message";
 
-const Room = ({user, room, socket}) => {
-    const {id} = useParams();
+const Room = ({user, socket}) => {
+    const {roomId} = useParams();
+
+    const {messageList, setMessageList} = useState([]);
+
+    const {room, setRoom} = useState(null);
+    const {sendButtonClicks, setSendButtonClicks} = useState(null);
+
+    useEffect(() => {
+        fetch('http://localhost:8000/api/room' + roomId)
+        .then(res => {
+            if (res.status !== 404 && res.status !== 500)
+                return res.json();
+            else
+                throw Error('Could not fetch room data.');
+        })
+        .then(room => {
+            setRoom(room);
+            setMessageList(room.messageList);
+        });
+    }, [sendButtonClicks]);
+
     // const user = fetch('http://localhost:8000/api/user/' + id);
     const [currentMessage, setCurrentMessage] = useState('');
     // const user = {
@@ -36,6 +56,7 @@ const Room = ({user, room, socket}) => {
             userList : res.userList
         };
         socket.emit('message', info);
+        setSendButtonClicks(sendButtonClicks + 1);
     };
 
     return (  
@@ -45,15 +66,19 @@ const Room = ({user, room, socket}) => {
             <div className="user-name">
                 <p>{user.userName}</p>
             </div>
-            <div className="online-status">
+            {/* <div className="online-status">
                 {user.isOnline && <p>Online</p>}
-            </div>
+            </div> */}
         </div>
         <hr></hr>
         <div className="chat-body">
 
-            <Message sender="John" message="Hello" time="2:59 pm" isSender={false} showName={true} />
-            <Message sender="You" message="Hello" time="3:01 pm" isSender={true} showName={true} />
+            {messageList && messageList.map(message => (
+                <Message sender={message.from} time={message.time} isSender={message.from === user.userName} showName={true} />
+            ))}
+
+            {/* <Message sender="John" message="Hello" time="2:59 pm" isSender={false} showName={true} />
+            <Message sender="You" message="Hello" time="3:01 pm" isSender={true} showName={true} /> */}
         </div>
         <div className="send-message">
             <footer>
