@@ -15,7 +15,7 @@ const roomSchema = mongoose.Schema({
         default : true
     },
 
-    isMulticast : {
+    isMulticast : {   
         type : Boolean,
         default : false
     },

@@ -15,15 +15,15 @@ const {RoomModel, create_and_get_common_room_details} = require('./models/Room')
 // }
 const userList = [];
 
-// mongoose.connect('mongodb+srv://soumitra:1234@primarycluster.yssrr.mongodb.net/TrialDB');
-mongoose.connect('mongodb://localhost:27017/chatapptrialdb', 
-    {
-        authSource: "admin",
-        "user": "kdjonty",
-        "pass": "jakeperalta99"
-    }
-);
-mongoose.Promise = global.Promise;
+mongoose.connect('mongodb+srv://soumitra:1234@primarycluster.yssrr.mongodb.net/TrialDB');
+// mongoose.connect('mongodb://localhost:27017/chatapptrialdb', 
+//     {
+//         authSource: "admin",
+//         "user": "kdjonty",
+//         "pass": "jakeperalta99"
+//     }
+// );
+//mongoose.Promise = global.Promise;
 
 app.use(cors({ credetials : true}));
 
@@ -92,7 +92,7 @@ create_and_get_common_room_details("Common chat room")
                     userList[user_index].isOnline = true;
                     userList[user_index].socket = socket;
                     socket.emit('success',{message : 'User connected successfully'});
-                    console.log('Connected Successfully' + socket.id);
+                    console.log('Connected Successfully\n' + userList);
                 }
             }
             else{
@@ -125,9 +125,12 @@ create_and_get_common_room_details("Common chat room")
 
             info.userList.forEach((user) => {
                 const user_index = userList.findIndex(data => data.userName === user.userName);
-                if(userList[user_index].isOnline === true){
-                    console.log('message sent to ' + user.userName);
-                    userList[user_index].socket.emit('message',send_data);
+                if (userList[user_index] != undefined){
+                    if(userList[user_index].isOnline === true){
+                        console.log('message sent to ' + user.userName);
+                        console.log(send_data);
+                        userList[user_index].socket.emit('message', send_data);
+                    }
                 }
             });
         });
@@ -138,9 +141,9 @@ create_and_get_common_room_details("Common chat room")
 
             info.userList.forEach((user) => {
                 const user_index = userList.findIndex(data => data.userName === user.userName);
-                if(userList[user_index].isOnline === true){
+                //if(userList[user_index].isOnline === true){
                     userList[user_index].socket.emit('room created', new_room_details);
-                }
+                //}
             });
         });
 
