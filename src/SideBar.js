@@ -24,11 +24,11 @@ const SideBar = ({user, room, setRoom, roomRefresh, setRoomRefresh}) => {
         console.log('room ' + data.room.roomName + ' clicked');
         const res = await fetch('http://localhost:8000/api/room/' + data.room.roomId);
         if (res.status !== 404 && res.status !== 500) {
-            // const data = await res.json();
-            room = await res.json();
+            const data = await res.json();
+            room = data;
             console.log('getting room');
-            console.log(room);
-            setRoom(room);
+            console.log(data);
+            await setRoom(data);
             setRoomRefresh(roomRefresh + 1);
         } else {
             const data = await res.json();

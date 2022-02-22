@@ -48,19 +48,19 @@ const Home = (props)=>{
 
     }, [setPropSocket, user]);
 
-    useEffect(() => {
-        if (propSocket !== null) {
-            propSocket.on('message', (data) => {
-                // if (room._id === data.roomId) {
-                //     room.messageList.push(data.message);
-                // }
-                console.log('room');
-                console.log(room);
-                setRoom(room);
-                setRoomRefresh(roomRefresh + 1);
-            });
-        }
-    }, [propSocket]);
+    // useEffect(() => {
+    //     if (propSocket !== null) {
+    //         propSocket.on('message', (data) => {
+    //             if (room._id === data.roomId) {
+    //                 room.messageList.push(data.message);
+    //             }
+    //             console.log('room');
+    //             console.log(room);
+    //             setRoom(room);
+    //             setRoomRefresh(roomRefresh + 1);
+    //         });
+    //     }
+    // }, [propSocket]);
 
     const handleTabClosing = () => {
 
@@ -96,7 +96,7 @@ const Home = (props)=>{
                     <SideBar user={ user } room={ room } setRoom={ setRoom } roomRefresh={ roomRefresh } setRoomRefresh={ setRoomRefresh }/>
                 </aside>
                 <main>
-                    <Room user={ user } room={ room } socket={ propSocket } roomRefresh={ roomRefresh } setRoomRefresh={ setRoomRefresh } />
+                    <Room user={ user } room={ room } setRoom={ setRoom } socket={ propSocket } roomRefresh={ roomRefresh } setRoomRefresh={ setRoomRefresh } />
                     {/* <BrowserRouter>
                         <Switch>
                             <Route exact path="/home/:roomId">
