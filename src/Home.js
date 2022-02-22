@@ -11,12 +11,15 @@ const Home = (props)=>{
     const setUser = props.setUser;
     let socket = null;
 
+    const [propSocket, setPropSocket] = useState(null);
     const [room, setRoom] = useState(null);
+    const [roomRefresh, setRoomRefresh] = useState(null);
 
     const History = useHistory();
 
     useEffect(() => {
         socket = io.connect('http://localhost:8000');
+        setPropSocket(socket);
         console.log('socket connected');
         socket.emit('trying-to-connect', {
             userName : user.userName
@@ -38,16 +41,16 @@ const Home = (props)=>{
             History.push('/404');
         });
 
-        socket.on('message', {
+        // socket.on('message', {
 
-        })
+        // })
 
     }, [user]);
 
     useEffect(() => {
         if (socket !== null) {
             socket.on('message', () => {
-
+                setRoomRefresh(roomRefresh + 1);
             });
         }
     });
@@ -83,10 +86,10 @@ const Home = (props)=>{
             <h1 align="center">{user.userName}!</h1>
             <div id="container">
                 <aside>
-                    <SideBar user={ user } room={ room } setRoom={ setRoom } />
+                    <SideBar user={ user } room={ room } setRoom={ setRoom } roomRefresh={ roomRefresh } setRoomRefresh={ setRoomRefresh }/>
                 </aside>
                 <main>
-                    <Room user={ user } room={ room } socket={ socket } />
+                    <Room user={ user } room={ room } socket={ propSocket } roomRefresh={ roomRefresh } setRoomRefresh={ setRoomRefresh } />
                     {/* <BrowserRouter>
                         <Switch>
                             <Route exact path="/home/:roomId">

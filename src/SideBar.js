@@ -1,7 +1,7 @@
 import { useHistory } from "react-router-dom";
 import UserPane from "./UserPane";
 
-const SideBar = ({user, room, setRoom}) => {
+const SideBar = ({user, room, setRoom, roomRefresh, setRoomRefresh}) => {
 
     // const user = props.user;
     // const room = props.user;
@@ -27,6 +27,7 @@ const SideBar = ({user, room, setRoom}) => {
             const data = await res.json();
             console.log(data);
             setRoom(data);
+            setRoomRefresh(roomRefresh + 1);
         } else {
             const data = await res.json();
             console.log(data.errorMessage);

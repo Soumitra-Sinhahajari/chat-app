@@ -1,19 +1,30 @@
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Message from "./Message";
 
-const Room = ({user, room, socket}) => {
+// Problems: 
+// Create Room to Home redirection, improper rendering -> room becoming null
+// Send button in Room triggering socket not working -> socket is staying null
+
+const Room = ({user, room, socket, roomRefresh, setRoomRefresh}) => {
     // const {roomId} = useParams();
     // console.log(roomId);
-
-    const {messageList, setMessageList} = useState([]);
+    const [messageList, setMessageList] = useState(room === null ? [] : room.messageList);
+    let dummyMessageList = room === null ? [] : room.messageList;
 
     // const {room, setRoom} = useState(null);
-    const {sendButtonClicks, setSendButtonClicks} = useState(null);
+    // const [sendButtonClicks, setSendButtonClicks] = useState(null);
 
     useEffect(() => {
-        if (room != null)
+        console.log('inside use effect');
+        console.log(room);
+        if (room != null) {
             setMessageList(room.messageList);
+            dummyMessageList = room.messageList;
+            console.log('dummy');
+            console.log(dummyMessageList);
+            console.log('state');
+            console.log(messageList);
+        }
         // fetch('http://localhost:8000/api/room' + roomId)
         // .then(res => {
         //     if (res.status !== 404 && res.status !== 500)
@@ -22,14 +33,10 @@ const Room = ({user, room, socket}) => {
         //         throw Error('Could not fetch room data.');
         // })
         // .then(room => {
-        //     setRoom(room);// const user = {
-    //     userName: 'John',
-    //     isOnline: true
-    // };
-
+        //     setRoom(room);
         //     setMessageList(room.messageList);
         // });
-    }, [sendButtonClicks]);
+    }, [roomRefresh]);
 
     const [currentMessage, setCurrentMessage] = useState('');
     
@@ -46,10 +53,12 @@ const Room = ({user, room, socket}) => {
             time : dateTime
         }
 
-        const res = await fetch('http://localhost:8000/api/room/messageList/' + room.roomId, {
+        dummyMessageList.push(msg);
+
+        const res = await fetch('http://localhost:8000/api/room/messageList/' + room._id, {
             method : 'PUT',
             headers : { 'Content-Type' : 'application/json' },
-            body : msg
+            body : JSON.stringify(msg)
         });
 
         const info = {
@@ -58,7 +67,8 @@ const Room = ({user, room, socket}) => {
             userList : res.userList
         };
         socket.emit('message', info);
-        setSendButtonClicks(sendButtonClicks + 1);
+        // setSendButtonClicks(sendButtonClicks + 1);
+        setRoomRefresh(roomRefresh + 1);
     };
 
     return (  
@@ -74,10 +84,13 @@ const Room = ({user, room, socket}) => {
         </div>
         <hr></hr>
         <div className="chat-body">
-
-            {messageList && messageList.map(message => (
-                <Message sender={message.from} time={message.time} isSender={message.from === user.userName} showName={true} />
-            ))}
+            <ul>
+                {messageList && messageList.map(message => (
+                    <li>
+                        <Message sender={message.from} message={message.body} time={message.time} isSender={message.from === user.userName} showName={true} />
+                    </li>
+                ))}
+            </ul>
 
             {/* <Message sender="John" message="Hello" time="2:59 pm" isSender={false} showName={true} />
             <Message sender="You" message="Hello" time="3:01 pm" isSender={true} showName={true} /> */}
