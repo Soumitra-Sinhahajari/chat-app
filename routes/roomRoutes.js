@@ -15,6 +15,7 @@ router.get('/room/:id', async (req, res) => {
     try{
         if(await RoomModel.exists({_id : roomId})){
             const room_data = await RoomModel.find({_id : roomId});
+            console.log(room_data[0]);
             res.send(room_data[0]);
         }
         else{
@@ -64,12 +65,13 @@ router.put('/room/messageList/:id', async (req, res) => {
     const new_message = req.body;
     try{
         if(await RoomModel.exists({_id : roomId})){
-            const updated_room_data = await RoomModel.find({_id : roomId}).updateOne({$push : {messageList : new_message}});
-            
+            const room_updation_status = await RoomModel.find({_id : roomId}).updateOne({$push : {messageList : new_message}});
+            const updated_room_data = await RoomModel.find({ _id : roomId});
+
             const room_index = global.roomList.findIndex( data => data.roomId === roomId );
             global.roomList[room_index].lastChattedTime = new_message.time;
-            
-            res.send({userList : updated_room_data.userList});
+            console.log(updated_room_data);
+            res.send({userList : updated_room_data[0].userList});
         }
         else{
             res.status(404).send({errorMessage : 'Room data not found'});
@@ -85,9 +87,10 @@ router.put('/room/userList/:id', async (req, res) => {
     const new_user = req.body;
     try{
         if(await RoomModel.exists({_id : roomId})){
-            const updated_room_data = await RoomModel.find({_id : roomId}).updateOne({$push : {userList : new_user}});
-            console.log(new_user);
-            res.send({userList : updated_room_data.userList});
+            const room_updation_status = await RoomModel.find({_id : roomId}).updateOne({$push : {userList : new_user}});
+            const updated_room_data = await RoomModel.find({ _id : roomId});
+
+            res.send({userList : updated_room_data[0].userList});
         }
         else{
             res.status(404).send({errorMessage : 'Room data not found'});
@@ -103,8 +106,9 @@ router.delete('/room/userList/:id', async (req, res) => {
     const deleting_user = req.body;
     try{
         if(await RoomModel.exists({_id : roomId})){
-            const updated_room_data = await RoomModel.find({_id : roomId}).updateOne({$pull : {userList : deleting_user}});
-            res.send({userList : updated_room_data.userList}    );
+            const room_updation_status = await RoomModel.find({_id : roomId}).updateOne({$pull : {userList : deleting_user}});
+            const updated_room_data = await RoomModel.find({ _id : roomId});
+            res.send({userList : updated_room_data[0].userList});
         }
         else{
             res.status(404).send({errorMessage : 'Room data not found'});

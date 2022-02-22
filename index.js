@@ -121,10 +121,12 @@ create_and_get_common_room_details("Common chat room")
                 roomId : info.roomId,
                 message : info.message
             };
+            console.log(info);
 
             info.userList.forEach((user) => {
                 const user_index = userList.findIndex(data => data.userName === user.userName);
-                if(userList[user_index] === true){
+                if(userList[user_index].isOnline === true){
+                    console.log('message sent to ' + user.userName);
                     userList[user_index].socket.emit('message',send_data);
                 }
             });
@@ -136,7 +138,7 @@ create_and_get_common_room_details("Common chat room")
 
             info.userList.forEach((user) => {
                 const user_index = userList.findIndex(data => data.userName === user.userName);
-                if(userList[user_index] === true){
+                if(userList[user_index].isOnline === true){
                     userList[user_index].socket.emit('room created', new_room_details);
                 }
             });
@@ -150,7 +152,7 @@ create_and_get_common_room_details("Common chat room")
 
             info.userList.forEach((user) => {
                 const user_index = userList.findIndex(data => data.userName === user.userName);
-                if(userList[user_index] === true){
+                if(userList[user_index].isOnline === true){
                     userList[user_index].socket.emit('user joined room',send_data);
                 }
             });
@@ -164,7 +166,7 @@ create_and_get_common_room_details("Common chat room")
 
             info.userList.forEach((user) => {
                 const user_index = userList.findIndex(data => data.userName === user.userName);
-                if(userList[user_index] === true){
+                if(userList[user_index].isOnline === true){
                     userList[user_index].socket.emit('user left room',send_data);
                 }
             });
