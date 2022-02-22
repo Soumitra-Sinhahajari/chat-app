@@ -39,13 +39,13 @@ const Room = ({user, room, socket, roomRefresh, setRoomRefresh}) => {
     }, [roomRefresh]);
 
     const [currentMessage, setCurrentMessage] = useState('');
-    
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' '+time;
 
     const sendHandler = async () => {
+
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
 
         const msg = {
             from : user.userName,
@@ -61,11 +61,18 @@ const Room = ({user, room, socket, roomRefresh, setRoomRefresh}) => {
             body : JSON.stringify(msg)
         });
 
+        const resdata = await res.json();
+        console.log('resdata');
+        console.log(resdata);
+
         const info = {
-            roomId : room.roomId,
+            roomId : room._id,
             message : currentMessage,
-            userList : res.userList
+            userList : resdata.userList
         };
+
+        console.log('sender side info');
+        console.log(info);
         socket.emit('message', info);
         // setSendButtonClicks(sendButtonClicks + 1);
         setRoomRefresh(roomRefresh + 1);

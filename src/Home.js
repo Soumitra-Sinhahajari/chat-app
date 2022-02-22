@@ -10,6 +10,7 @@ const Home = (props)=>{
     const user = props.user;
     const setUser = props.setUser;
     let socket = null;
+    // const [socket, setSocket] = useState(null);
 
     const [propSocket, setPropSocket] = useState(null);
     const [room, setRoom] = useState(null);
@@ -19,7 +20,7 @@ const Home = (props)=>{
 
     useEffect(() => {
         socket = io.connect('http://localhost:8000');
-        setPropSocket(socket);
+        setPropSocket(socket); 
         console.log('socket connected');
         socket.emit('trying-to-connect', {
             userName : user.userName
@@ -45,15 +46,21 @@ const Home = (props)=>{
 
         // })
 
-    }, [user]);
+    }, [setPropSocket, user]);
 
     useEffect(() => {
-        if (socket !== null) {
-            socket.on('message', () => {
+        if (propSocket !== null) {
+            propSocket.on('message', (data) => {
+                // if (room._id === data.roomId) {
+                //     room.messageList.push(data.message);
+                // }
+                console.log('room');
+                console.log(room);
+                setRoom(room);
                 setRoomRefresh(roomRefresh + 1);
             });
         }
-    });
+    }, [propSocket]);
 
     const handleTabClosing = () => {
 

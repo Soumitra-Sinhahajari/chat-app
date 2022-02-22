@@ -61,7 +61,7 @@ const Login = (props) => {
             const data = await fetch('http://localhost:8000/api/room/userList/'+commonRoomId, {
                 method : 'PUT',
                 headers : { 'Content-Type' : 'application/json' },
-                body : JSON.stringify({newUser : user.userName})
+                body : JSON.stringify({userName : user.userName})
             });
             if (data.status !== 404 && data.status !== 500) {
                 History.push('/home');
