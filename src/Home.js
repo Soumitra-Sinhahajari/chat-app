@@ -16,6 +16,7 @@ const Home = (props)=>{
     const [propSocket, setPropSocket] = useState(null);
     const [room, setRoom] = useState(null);
     const [rooms, setRooms ] = useState(user.joinedRoomList);
+    const [create, setCreate] = useState(false);
     const fetchRooms = async () => {
         const res = await fetch('http://localhost:8000/api/user/roomList/'+user._id);
         const resdata = await res.json();
@@ -102,14 +103,12 @@ const Home = (props)=>{
         <div className="homeOrCreate">
             {/* <BrowserRouter>
                 <Route path="/home"> */}
-                <header>
-                    <CreateRoom user={ user } setUser={ setUser } room={ room } setRoom={ setRoom } rooms={ rooms } setRooms={ setRooms }socket={ propSocket } />
-                </header>
+                {create && (<CreateRoom user={ user } setUser={ setUser } room={ room } setRoom={ setRoom } rooms={ rooms } setRooms={ setRooms } socket={ propSocket } setCreate={ setCreate } />)}
                 <div className='home'>
                     <h1 align="center">{user.userName}!</h1>
                     <div id="container">
                         <aside>
-                            <SideBar user={ user } setUser={ setUser } rooms={ rooms } setRooms={ setRooms } room={ room } setRoom={ setRoom } socket={ propSocket }/>
+                            <SideBar user={ user } setUser={ setUser } rooms={ rooms } setRooms={ setRooms } room={ room } setRoom={ setRoom } socket={ propSocket } setCreate={ setCreate } />
                         </aside>
                         <main>
                             <Room user={ user } room={ room } setRoom={ setRoom } socket={ propSocket } />

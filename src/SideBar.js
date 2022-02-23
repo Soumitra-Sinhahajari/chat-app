@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserPane from "./UserPane";
 
-const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket}) => {
+const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, setCreate}) => {
 
     // const user = props.user;
     // const room = props.user;
@@ -44,7 +44,8 @@ const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket}) => {
 
     const startChat = (e) => {
         e.preventDefault();
-        History.push('/create');
+        setCreate(true);
+        // History.push('/create');
     };
 
     const clickRoom = async (data, e) => {

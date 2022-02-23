@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import './CreateRoom.css';
 
-const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket}) => {
+const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setCreate}) => {
     // const user = props.user;
     // const setUser = props.setUser;
     // const room = props.room;
@@ -86,6 +86,7 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket}) => 
                 //     return updatedUser;
                 // });  
                 // console.log(user);
+                setCreate(false);
                 setRooms((rooms) => [joinedRoom, ...rooms]);
                 const dummyUserList = gotRoom.userList.filter((data) => data.userName !== user.userName);
                 console.log('to server');

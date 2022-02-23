@@ -13,8 +13,8 @@ const Room = ({user, room, setRoom, socket}) => {
     const ml_ref = useRef();
 
 
-    console.log('room page rendered');
-    console.log(room);
+    // console.log('room page rendered');
+    // console.log(room);
 
     // useEffect(async (e)=>{
     //     await setMessageList(ml_ref.current);
@@ -78,12 +78,14 @@ const Room = ({user, room, setRoom, socket}) => {
                 // dummyMessageList.push(data.message);
                 // console.log('dummy message list');
                 // console.log(dummyMessageList);
-                console.log("socket on message-----");
+                console.log("socket on message----- for" + user.userName);
                 // let dml = ml_ref.current;
                 // console.log(dml);
                 // dml = [...dml, data.message];
                 // ml_ref.current = 
                 // console.log(dml);
+                console.log(room);
+                console.log(data);
                 if (room !== null && room._id === data.roomId)
                     setMessageList((messageList) => {return [...messageList, data.message]});
 
@@ -127,7 +129,10 @@ const Room = ({user, room, setRoom, socket}) => {
             userList : resdata.userList
         };
 
+        console.log(info);
+
         socket.emit('message', info);
+        setRoom(room);
         // setSendButtonClicks(sendButtonClicks + 1);
         // setRoomRefresh(roomRefresh + 1);
         
