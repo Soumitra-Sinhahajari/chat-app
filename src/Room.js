@@ -26,7 +26,7 @@ const Room = ({user, room, setRoom, socket}) => {
 
     useEffect(() => {
         console.log("room 28", room);
-        if (room != null) {
+        if (room !== null) {
             console.log('room changed to not null');
             // setMessageList(dummyMessageList);
             // // messageList = dummyMessageList;
@@ -131,6 +131,8 @@ const Room = ({user, room, setRoom, socket}) => {
 
         console.log(info);
 
+
+        setRoom(room);
         socket.emit('message', info);
         setRoom(room);
         // setSendButtonClicks(sendButtonClicks + 1);
