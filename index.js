@@ -6,6 +6,7 @@ const room_routes = require('./routes/roomRoutes');
 const socket = require('socket.io');
 const mongoose = require('mongoose');
 const {RoomModel, create_and_get_common_room_details} = require('./models/Room');
+const UserModel = require('./models/User');
 
 //  user-socket list structure here
 // {
@@ -15,15 +16,15 @@ const {RoomModel, create_and_get_common_room_details} = require('./models/Room')
 // }
 const userList = [];
 
-mongoose.connect('mongodb+srv://soumitra:1234@primarycluster.yssrr.mongodb.net/TrialDB');
-// mongoose.connect('mongodb://localhost:27017/chatapptrialdb', 
-//     {
-//         authSource: "admin",
-//         "user": "kdjonty",
-//         "pass": "jakeperalta99"
-//     }
-// );
-//mongoose.Promise = global.Promise;
+// mongoose.connect('mongodb+srv://soumitra:1234@primarycluster.yssrr.mongodb.net/TrialDB');
+mongoose.connect('mongodb://localhost:27017/chatapptrialdb', 
+    {
+        authSource: "admin",
+        "user": "kdjonty",
+        "pass": "jakeperalta99"
+    }
+);
+mongoose.Promise = global.Promise;
 
 app.use(cors({ credetials : true}));
 
@@ -140,10 +141,16 @@ create_and_get_common_room_details("Common chat room")
             const new_room_details = global.roomList[new_room_index];
 
             info.userList.forEach((user) => {
+                UserModel.findOneAndUpdate({userName : user.userName}, {$puh : {joinedRoomList : {roomId : info.roomId, roomName : info.roomName}}});
+            });
+
+            info.userList.forEach((user) => {
                 const user_index = userList.findIndex(data => data.userName === user.userName);
-                //if(userList[user_index].isOnline === true){
-                    userList[user_index].socket.emit('room created', new_room_details);
-                //}
+                if (userList[user_index] != undefined){
+                    if(userList[user_index].isOnline === true){
+                        userList[user_index].socket.emit('room created', new_room_details);
+                    }
+                }
             });
         });
 

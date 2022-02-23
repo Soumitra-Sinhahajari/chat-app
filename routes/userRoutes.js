@@ -5,8 +5,10 @@ const RoomModel = require('../models/Room');
 const router = express.Router();
 
 // Get room list with last chatted time
-router.get('/user/roomList', (req, res) => {
-    const user_room_list = req.body.joinedRoomList;
+router.get('/user/roomList/:id', async (req, res) => {
+    const user_id = req.params.id;
+    const user = await UserModel.find({ _id : user_id });
+    const user_room_list = user[0].joinedRoomList;
     console.log(user_room_list);
     let new_room_list = [];
     user_room_list.forEach(element => {
