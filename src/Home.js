@@ -14,7 +14,7 @@ const Home = (props)=>{
 
     const [propSocket, setPropSocket] = useState(null);
     const [room, setRoom] = useState(null);
-    const [roomRefresh, setRoomRefresh] = useState(null);
+    // const [roomRefresh, setRoomRefresh] = useState(null);
 
     const History = useHistory();
 
@@ -93,10 +93,10 @@ const Home = (props)=>{
             <h1 align="center">{user.userName}!</h1>
             <div id="container">
                 <aside>
-                    <SideBar user={ user } room={ room } setRoom={ setRoom } roomRefresh={ roomRefresh } setRoomRefresh={ setRoomRefresh }/>
+                    <SideBar user={ user } room={ room } setRoom={ setRoom } socket={ propSocket }/>
                 </aside>
                 <main>
-                    <Room user={ user } room={ room } setRoom={ setRoom } socket={ propSocket } roomRefresh={ roomRefresh } setRoomRefresh={ setRoomRefresh } />
+                    <Room user={ user } room={ room } setRoom={ setRoom } socket={ propSocket } />
                     {/* <BrowserRouter>
                         <Switch>
                             <Route exact path="/home/:roomId">

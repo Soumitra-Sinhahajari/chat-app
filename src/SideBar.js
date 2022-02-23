@@ -1,7 +1,8 @@
 import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
 import UserPane from "./UserPane";
 
-const SideBar = ({user, room, setRoom, roomRefresh, setRoomRefresh}) => {
+const SideBar = ({user, room, setRoom, socket}) => {
 
     // const user = props.user;
     // const room = props.user;
@@ -20,16 +21,12 @@ const SideBar = ({user, room, setRoom, roomRefresh, setRoomRefresh}) => {
     const clickRoom = async (data, e) => {
         // e.preventDefault();
         // Room redirect(history)
-        console.log('inside click room');
-        console.log('room ' + data.room.roomName + ' clicked');
         const res = await fetch('http://localhost:8000/api/room/' + data.room.roomId);
         if (res.status !== 404 && res.status !== 500) {
             const data = await res.json();
             room = data;
-            console.log('getting room');
-            console.log(data);
             await setRoom(data);
-            setRoomRefresh(roomRefresh + 1);
+            // setRoomRefresh(roomRefresh + 1);
         } else {
             const data = await res.json();
             console.log(data.errorMessage);

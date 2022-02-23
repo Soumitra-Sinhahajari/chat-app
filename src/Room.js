@@ -1,30 +1,45 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Message from "./Message";
 
 // Problems: 
 // Create Room to Home redirection, improper rendering -> room becoming null
 // Send button in Room triggering socket not working -> socket is staying null
 
-const Room = ({user, room, setRoom, socket, roomRefresh, setRoomRefresh}) => {
+const Room = ({user, room, setRoom, socket}) => {
     const [messageList, setMessageList] = useState(room === null ? [] : room.messageList);
     let dummyMessageList = room === null ? [] : room.messageList;
+    const [roomRefresh, setRoomRefresh] = useState(null);
     const thisRoomId = room === null ? null : room._id;
+    const ml_ref = useRef();
 
+
+    // console.log('room page rendered');
+
+    // useEffect(async (e)=>{
+    //     await setMessageList(ml_ref.current);
+    // }, []);
+    
+    // console.log(messageList);
     //const {room, setRoom} = useState(null);
     // const [sendButtonClicks, setSendButtonClicks] = useState(null);
 
-    useEffect(() => {
-        console.log('inside use effect');
-        console.log(room);
+    useEffect((e) => {
         if (room != null) {
-            setMessageList(dummyMessageList);
-            // messageList = dummyMessageList;
-            // setMessageList(room.messageList);
+            console.log('room changed to not null');
+            // setMessageList(dummyMessageList);
+            // // messageList = dummyMessageList;
+            // // setMessageList(room.messageList);
             // dummyMessageList = room.messageList;
-            console.log('dummy');
-            console.log(dummyMessageList);
-            console.log('state');
-            console.log(messageList);
+            // console.log('dummy');
+            // console.log(dummyMessageList);
+            // console.log('state');
+            // console.log(messageList);
+            dummyMessageList = room.messageList;
+            setMessageList(room.messageList);
+            ml_ref.current = room.messageList;
+        }
+        else{
+            console.log('room changed to null');
         }
         // fetch('http://localhost:8000/api/room' + roomId)
         // .then(res => {
@@ -37,15 +52,18 @@ const Room = ({user, room, setRoom, socket, roomRefresh, setRoomRefresh}) => {
         //     setRoom(room);
         //     setMessageList(room.messageList);
         // });
-    }, [roomRefresh]);
+    }, [room]);
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     setRoomRefresh(roomRefresh + 1);
+    //     console.log('room refreshed');
+    // },[messageList]);
+
+    useEffect((e) => {
         if (socket !== null) {
-            console.log('inside socket(1)');
+            console.log('inside socket(room.js)');
             console.log(room);
             socket.on('message', (data) => {
-                console.log('server sent data = ');
-                console.log(data);
                 // if (thisRoomId === data.roomId) {
 
                 // const dMessageList = messageList;
@@ -53,16 +71,23 @@ const Room = ({user, room, setRoom, socket, roomRefresh, setRoomRefresh}) => {
 
                 // setMessageList(dMessageList);
 
-                dummyMessageList = messageList;
-                dummyMessageList.push(data.message);
-
-                setMessageList(dummyMessageList);
+                // dummyMessageList = messageList;
+                // dummyMessageList.push(data.message);
+                // console.log('dummy message list');
+                // console.log(dummyMessageList);
+                console.log("socket on message-----");
+                // let dml = ml_ref.current;
+                // console.log(dml);
+                // dml = [...dml, data.message];
+                // ml_ref.current = 
+                // console.log(dml);
+                setMessageList((messageList) => {return [...messageList, data.message]});
 
                 // }
                 // console.log('room');
                 // console.log(room);
                 // setRoom(room);
-                setRoomRefresh(roomRefresh + 1);
+                // setRoomRefresh(roomRefresh + 1);
             });
         }
     }, [socket]);
@@ -82,7 +107,7 @@ const Room = ({user, room, setRoom, socket, roomRefresh, setRoomRefresh}) => {
             time : dateTime
         }
 
-        dummyMessageList.push(msg);
+        // dummyMessageList.push(msg);
 
         const res = await fetch('http://localhost:8000/api/room/messageList/' + room._id, {
             method : 'PUT',
@@ -91,22 +116,16 @@ const Room = ({user, room, setRoom, socket, roomRefresh, setRoomRefresh}) => {
         });
 
         const resdata = await res.json();
-        console.log('resdata');
-        console.log(resdata);
 
         const info = {
             roomId : room._id,
-            message : currentMessage,
+            message : msg,
             userList : resdata.userList
         };
 
-        console.log('sender side info');
-        console.log(info);
         socket.emit('message', info);
         // setSendButtonClicks(sendButtonClicks + 1);
-        setRoomRefresh(roomRefresh + 1);
-        console.log('check room');
-        console.log(room);
+        // setRoomRefresh(roomRefresh + 1);
         
     };
 
@@ -124,9 +143,9 @@ const Room = ({user, room, setRoom, socket, roomRefresh, setRoomRefresh}) => {
         <hr></hr>
         <div className="chat-body">
             <ul>
-                {messageList && messageList.map(message => (
+                {messageList && messageList.map((message,i) => (
                     <li>
-                        <Message sender={message.from} message={message.body} time={message.time} isSender={message.from === user.userName} showName={true} />
+                        <Message key={i} sender={message.from} message={message.body} time={message.time} isSender={message.from === user.userName} showName={true} />
                     </li>
                 ))}
             </ul>
