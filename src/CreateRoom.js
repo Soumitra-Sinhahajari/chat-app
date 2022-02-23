@@ -2,9 +2,12 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import './CreateRoom.css';
 
-const CreateRoom = (props) => {
-    const user = props.user;
-    const setUser = props.setUser;
+const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket}) => {
+    // const user = props.user;
+    // const setUser = props.setUser;
+    // const room = props.room;
+    // const setRoom = props.setRoom;
+    // const socket = props.socket;
     const [userList, setUserList] = useState([]);
     const [userName, setUserName] = useState(null);
     const [roomName, setRoomName] = useState(null);
@@ -18,7 +21,10 @@ const CreateRoom = (props) => {
         if (res.status !== 404 && res.status !== 500) {
             // const data = await res.json();
             // console.log(data);
-            setUserList(userList => [userName, ...userList]);
+            const data = {
+                userName : userName
+            };
+            setUserList(userList => [data, ...userList]);
             setError(null);
         } else {
             const data = await res.json();
@@ -30,15 +36,18 @@ const CreateRoom = (props) => {
     const createRoom = async (e) => {
         e.preventDefault();
         const dummyUserList = userList;
-        dummyUserList.push(user.userName);
-        setUserList(userList => [...userList, userName]);
+        const userdata = {
+            userName : user.userName
+        };
+        dummyUserList.push(userdata);
+        setUserList(userList => [...userList, userdata]);
         console.log(dummyUserList);
         let isMulticast = false;
         if(userList.length > 2) {
             isMulticast = true;
         }
 
-        const room = {
+        const newRoom = {
             roomName : roomName,
             userList : dummyUserList,
             isBroadcast : false,
@@ -49,26 +58,44 @@ const CreateRoom = (props) => {
         const res = await fetch('http://localhost:8000/api/room', {
             method : 'POST',
             headers : { 'Content-Type' : 'application/json' },
-            body : JSON.stringify(room)
+            body : JSON.stringify(newRoom)
         });
         if (res.status !== 500) {
-            const room = await res.json();
+            const gotRoom = await res.json();
+            console.log('got new room details from server-----');
+            console.log(gotRoom);
+            setRoom(gotRoom);
             const joinedRoom = {
-                roomName : room.roomName,
-                roomId : room._id,
-                // lastChattedTime : null
+                roomName : gotRoom.roomName,
+                roomId : gotRoom._id,
+                lastChattedTime : gotRoom.messageList[0].time
+            };
+            const write_new_room = {
+                roomName : gotRoom.roomName,
+                roomId : gotRoom._id,
             };
             const res2 = await fetch('http://localhost:8000/api/user/joinedRoom/'+user._id, {
                 method : 'PUT',
                 headers : { 'Content-Type' : 'application/json' },
-                body : JSON.stringify(joinedRoom)
+                body : JSON.stringify(write_new_room)
             });
             if (res2.status !== 500 && res2.status !== 404) {
-                const updatedUser = user;
-                updatedUser.joinedRoomList = [joinedRoom, ...updatedUser.joinedRoomList];
-                setUser(updatedUser);
-                console.log(user);
-                History.push('/home');
+                // setUser((user) => {
+                //     let updatedUser = {...user};
+                //     updatedUser.joinedRoomList = [joinedRoom, ...updatedUser.joinedRoomList];
+                //     return updatedUser;
+                // });  
+                // console.log(user);
+                setRooms((rooms) => [joinedRoom, ...rooms]);
+                const dummyUserList = gotRoom.userList.filter((data) => data.userName !== user.userName);
+                console.log('to server');
+                console.log(dummyUserList);
+                const info = {
+                    roomId : gotRoom._id,
+                    userList : dummyUserList
+                };
+                socket.emit('room created', info);
+                // History.push('/home');
             } else {
                 const data = await res2.json();
                 setError(data.errorMessage);
@@ -89,10 +116,10 @@ const CreateRoom = (props) => {
             <input type="text" id="username-input" onChange={(e) => setUserName(e.target.value)}></input>
             <button onClick={addMember}>Add Member</button>
             <ul>
-                {userList.map((username) => (
+                {userList.map((userdata) => (
                    <li>
                        <div class="container">
-                           {username}
+                           {userdata.userName}
                        </div>
                    </li> 
                 ))}

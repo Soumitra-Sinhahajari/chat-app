@@ -19,9 +19,6 @@ function App() {
           <Route exact path='/'>
             <Login setUser={ setUser } />
           </Route>
-          <Route path='/create'>
-            <CreateRoom user={ user } setUser={ setUser }/>
-          </Route>
           <Route path='/home'>
             <Home user={ user } setUser={ setUser } />
           </Route>

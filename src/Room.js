@@ -13,7 +13,8 @@ const Room = ({user, room, setRoom, socket}) => {
     const ml_ref = useRef();
 
 
-    // console.log('room page rendered');
+    console.log('room page rendered');
+    console.log(room);
 
     // useEffect(async (e)=>{
     //     await setMessageList(ml_ref.current);
@@ -23,7 +24,8 @@ const Room = ({user, room, setRoom, socket}) => {
     //const {room, setRoom} = useState(null);
     // const [sendButtonClicks, setSendButtonClicks] = useState(null);
 
-    useEffect((e) => {
+    useEffect(() => {
+        console.log("room 28", room);
         if (room != null) {
             console.log('room changed to not null');
             // setMessageList(dummyMessageList);
@@ -37,6 +39,7 @@ const Room = ({user, room, setRoom, socket}) => {
             dummyMessageList = room.messageList;
             setMessageList(room.messageList);
             ml_ref.current = room.messageList;
+            console.log("room 42");
         }
         else{
             console.log('room changed to null');
@@ -61,8 +64,8 @@ const Room = ({user, room, setRoom, socket}) => {
 
     useEffect((e) => {
         if (socket !== null) {
-            console.log('inside socket(room.js)');
-            console.log(room);
+            // console.log('inside socket(room.js)');
+            // console.log(room);
             socket.on('message', (data) => {
                 // if (thisRoomId === data.roomId) {
 
@@ -81,7 +84,8 @@ const Room = ({user, room, setRoom, socket}) => {
                 // dml = [...dml, data.message];
                 // ml_ref.current = 
                 // console.log(dml);
-                setMessageList((messageList) => {return [...messageList, data.message]});
+                if (room !== null && room._id === data.roomId)
+                    setMessageList((messageList) => {return [...messageList, data.message]});
 
                 // }
                 // console.log('room');
@@ -154,14 +158,16 @@ const Room = ({user, room, setRoom, socket}) => {
             <Message sender="You" message="Hello" time="3:01 pm" isSender={true} showName={true} /> */}
         </div>
         <div className="send-message">
-            <footer>
-                <input
-                    type="text"
-                    value={currentMessage}
-                    onChange={(e) => setCurrentMessage(e.target.value)}
-                />
-                <button onClick={sendHandler}>Send</button>  
-            </footer>              
+            {room && 
+                (<footer>
+                    <input
+                        type="text"
+                        value={currentMessage}
+                        onChange={(e) => setCurrentMessage(e.target.value)}
+                    />
+                    <button onClick={sendHandler}>Send</button>  
+                </footer>)  
+            }            
         </div>
     </div>
 

@@ -85,7 +85,7 @@ const Login = (props) => {
                 <br/>
                 <label id='name-input-label'>Enter User Name : </label>
                 <br/>
-                <input type='text' id='name-input' defaultValue='enter unique user name' onChange={ (e)=>{setNewUserName(e.target.value)} }></input>
+                <input type='text' id='name-input' placeholder='enter unique user name' onChange={ (e)=>{setNewUserName(e.target.value)} }></input>
                 <br/>
                 <input type='password' id='password-input' onChange = {(e) => {setPassword(e.target.value)}}></input>
                 <br/>

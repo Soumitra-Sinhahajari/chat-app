@@ -5,6 +5,7 @@ import Room from './Room';
 import SideBar from './SideBar';
 // import { Router } from '@reach/react';
 import { BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
+import CreateRoom from './CreateRoom';
 
 const Home = (props)=>{
     const user = props.user;
@@ -14,6 +15,14 @@ const Home = (props)=>{
 
     const [propSocket, setPropSocket] = useState(null);
     const [room, setRoom] = useState(null);
+    const [rooms, setRooms ] = useState(user.joinedRoomList);
+    const fetchRooms = async () => {
+        const res = await fetch('http://localhost:8000/api/user/roomList/'+user._id);
+        const resdata = await res.json();
+        console.log('got user list from server ');
+        console.log(resdata);
+        setRooms(resdata);
+    };
     // const [roomRefresh, setRoomRefresh] = useState(null);
 
     const History = useHistory();
@@ -27,7 +36,8 @@ const Home = (props)=>{
         });
 
         socket.on('success', () => {
-            console.log('Success at Frontend too.')
+            console.log('Success at Frontend too.');
+            fetchRooms();
         });
 
         socket.on('error', () => {
@@ -46,7 +56,7 @@ const Home = (props)=>{
 
         // })
 
-    }, [setPropSocket, user]);
+    }, [setPropSocket]);
 
     // useEffect(() => {
     //     if (propSocket !== null) {
@@ -89,24 +99,30 @@ const Home = (props)=>{
 
     return (
         
-        <div className='home'>
-            <h1 align="center">{user.userName}!</h1>
-            <div id="container">
-                <aside>
-                    <SideBar user={ user } room={ room } setRoom={ setRoom } socket={ propSocket }/>
-                </aside>
-                <main>
-                    <Room user={ user } room={ room } setRoom={ setRoom } socket={ propSocket } />
-                    {/* <BrowserRouter>
-                        <Switch>
-                            <Route exact path="/home/:roomId">
-                                <
-                            </Route>
-                        </Switch>
-                    </BrowserRouter> */}
-                </main>
-            </div>
+        <div className="homeOrCreate">
+            {/* <BrowserRouter>
+                <Route path="/home"> */}
+                <header>
+                    <CreateRoom user={ user } setUser={ setUser } room={ room } setRoom={ setRoom } rooms={ rooms } setRooms={ setRooms }socket={ propSocket } />
+                </header>
+                <div className='home'>
+                    <h1 align="center">{user.userName}!</h1>
+                    <div id="container">
+                        <aside>
+                            <SideBar user={ user } setUser={ setUser } rooms={ rooms } setRooms={ setRooms } room={ room } setRoom={ setRoom } socket={ propSocket }/>
+                        </aside>
+                        <main>
+                            <Room user={ user } room={ room } setRoom={ setRoom } socket={ propSocket } />
+                        </main>
+                    </div>
+                </div>
+                {/* </Route>
+                <Route path="/create">
+                    <CreateRoom user={ user } setUser={ setUser } room={ room } setRoom={ setRoom } socket={ propSocket } />
+                </Route>
+            </BrowserRouter> */}
         </div>
+        
     );
    };
    
