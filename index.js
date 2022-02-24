@@ -141,7 +141,10 @@ create_and_get_common_room_details("Common chat room")
             const new_room_details = global.roomList[new_room_index];
 
             info.userList.forEach((user) => {
-                UserModel.findOneAndUpdate({userName : user.userName}, {$push : {joinedRoomList : {roomId : info.roomId, roomName : info.roomName}}});
+                // UserModel.findOneAndUpdate({userName : user.userName}, {$push : {joinedRoomList : {roomId : info.roomId, roomName : info.roomName}}});
+                const updation_status = await UserModel.find({userName : user.userName}).updateOne({$push : {joinedRoomList : {roomId : info.roomId, roomName : info.roomName}}});
+                const updated_data = await UserModel.find({userName : user.userName});
+                console.log(updated_data);
             });
 
             info.userList.forEach((user) => {
