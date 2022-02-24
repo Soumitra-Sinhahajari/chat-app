@@ -111,7 +111,7 @@ const Home = (props)=>{
                             <SideBar user={ user } setUser={ setUser } rooms={ rooms } setRooms={ setRooms } room={ room } setRoom={ setRoom } socket={ propSocket } setCreate={ setCreate } />
                         </aside>
                         <main>
-                            <Room user={ user } room={ room } setRoom={ setRoom } socket={ propSocket } />
+                            {room && (<Room user={ user } room={ room } setRoom={ setRoom } socket={ propSocket } />)}
                         </main>
                     </div>
                 </div>

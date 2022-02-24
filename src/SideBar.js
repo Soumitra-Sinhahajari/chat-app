@@ -55,7 +55,9 @@ const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, setCrea
         if (res.status !== 404 && res.status !== 500) {
             const data = await res.json();
             room = data;
-            await setRoom(data);
+            setRoom(data);
+            console.log('when room clicked');
+            console.log(room);
             // setRoomRefresh(roomRefresh + 1);
         } else {
             const data = await res.json();

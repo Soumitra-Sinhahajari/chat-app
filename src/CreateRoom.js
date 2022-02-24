@@ -64,7 +64,7 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setC
             const gotRoom = await res.json();
             console.log('got new room details from server-----');
             console.log(gotRoom);
-            setRoom(gotRoom);
+            // setRoom(gotRoom);   
             const joinedRoom = {
                 roomName : gotRoom.roomName,
                 roomId : gotRoom._id,

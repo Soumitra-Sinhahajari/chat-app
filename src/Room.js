@@ -84,10 +84,11 @@ const Room = ({user, room, setRoom, socket}) => {
                 // dml = [...dml, data.message];
                 // ml_ref.current = 
                 // console.log(dml);
-                console.log(room);
+                setRoom((room) => {if (room && room._id === data.roomId)
+                    setMessageList((messageList) => {return [...messageList, data.message]}); return room;})
+                // console.log(ro   om);
                 console.log(data);
-                if (room !== null && room._id === data.roomId)
-                    setMessageList((messageList) => {return [...messageList, data.message]});
+                
 
                 // }
                 // console.log('room');
@@ -129,12 +130,13 @@ const Room = ({user, room, setRoom, socket}) => {
             userList : resdata.userList
         };
 
+        console.log('when send button clicked');
         console.log(info);
 
 
-        setRoom(room);
+        // setRoom(room);
         socket.emit('message', info);
-        setRoom(room);
+        // setRoom(room);
         // setSendButtonClicks(sendButtonClicks + 1);
         // setRoomRefresh(roomRefresh + 1);
         
