@@ -4,19 +4,45 @@ const RoomModel = require('../models/Room');
 
 const router = express.Router();
 
+// Get all user list from server
+router.get('/user/all', async (req,res) => {
+    try{
+        const all_user_list = await UserModel.find({});
+        const send_user_list = [];
+        all_user_list.forEach(user => {
+            const user_details = { userName : user.userName};
+            send_user_list.push(user_details);
+        });
+        res.send(send_user_list);
+    }
+    catch(err){
+            res.status(500).send({errorMessage : 'Internal Server Error'});
+    }
+});
+
 // Get room list with last chatted time
 router.get('/user/roomList/:id', async (req, res) => {
     const user_id = req.params.id;
-    const user = await UserModel.find({ _id : user_id });
-    const user_room_list = user[0].joinedRoomList;
-    console.log(user_room_list);
-    let new_room_list = [];
-    user_room_list.forEach(element => {
-        const room_index = global.roomList.findIndex( room => room.roomId === element.roomId );
-        console.log(room_index);
-        new_room_list.push(global.roomList[room_index]);
-    });
-    res.send(new_room_list);
+    try{
+        if(await UserModel.exists({_id : user_id})){
+            const user = await UserModel.find({ _id : user_id });
+            const user_room_list = user[0].joinedRoomList;
+            console.log(user_room_list);
+            let new_room_list = [];
+            user_room_list.forEach(element => {
+                const room_index = global.roomList.findIndex( room => room.roomId === element.roomId );
+                console.log(room_index);
+                new_room_list.push(global.roomList[room_index]);
+            });
+            res.send(new_room_list);
+        }
+        else{
+            res.status(404).send({errorMessage : 'User data not found'});
+        }
+    }
+    catch(err){
+        res.status(500).send({errorMessage : 'Internal Server Error'});
+    }
 });
 
 // Check if username exists or not
