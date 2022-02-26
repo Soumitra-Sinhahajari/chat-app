@@ -80,14 +80,20 @@ const Login = (props) => {
 
     return (
         <div className='login-form'>
+            <div class="background">
+                <div class="shape"></div>
+                <div class="shape"></div>
+            </div>
             <form>
                 {Error && (<label id='error-message-label'>{ Error }</label>)}
                 <br/>
-                <label id='name-input-label'>Enter User Name : </label>
+                <label for="username">Username</label>
                 <br/>
-                <input type='text' id='name-input' placeholder='enter unique user name' onChange={ (e)=>{setNewUserName(e.target.value)} }></input>
+                <input type='text' id='name-input' placeholder='Enter Unique Username' onChange={ (e)=>{setNewUserName(e.target.value)} }></input>
                 <br/>
-                <input type='password' id='password-input' onChange = {(e) => {setPassword(e.target.value)}}></input>
+                <label for="password">Password</label>
+                <br/>
+                <input type='password' id='password-input' placeholder='Enter Password' onChange = {(e) => {setPassword(e.target.value)}}></input>
                 <br/>
                 <button onClick={enterLoginButtonClicked}>Login</button>
                 <button onClick={enterRegisterButtonClicked}>Register</button>

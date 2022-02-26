@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import Message from "./Message";
 
+
 // Problems: 
 // Create Room to Home redirection, improper rendering -> room becoming null
 // Send button in Room triggering socket not working -> socket is staying null
@@ -190,18 +191,20 @@ const Room = ({user, room, setRoom, setRooms, socket}) => {
             {/* <Message sender="John" message="Hello" time="2:59 pm" isSender={false} showName={true} />
             <Message sender="You" message="Hello" time="3:01 pm" isSender={true} showName={true} /> */}
         </div>
-        <div className="send-message">
-            {room && 
-                (<footer>
-                    <input
-                        type="text"
-                        value={currentMessage}
-                        onChange={(e) => setCurrentMessage(e.target.value)}
-                    />
-                    <button onClick={sendHandler}>Send</button>  
-                </footer>)  
-            }            
-        </div>
+        <footer>
+            <div className="send-message">
+                {room && 
+                    (<footer>
+                        <input
+                            type="text"
+                            value={currentMessage}
+                            onChange={(e) => setCurrentMessage(e.target.value)}
+                        />
+                        <button onClick={sendHandler}>Send</button>  
+                    </footer>)  
+                }            
+            </div>
+        </footer>
     </div>
 
     );

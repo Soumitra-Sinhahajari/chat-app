@@ -6,7 +6,7 @@ body{
 	font-family:Arial;
 }
 #container{
-	width:750px;
+	width:90%;
 	height:800px;
 	background:#eff3f7;
 	margin:0 auto;
@@ -15,7 +15,7 @@ body{
 	overflow:hidden;
 }
 aside{
-	width:260px;
+	width:30%;
 	height:800px;
 	background-color:#3b3e49;
 	display:inline-block;
@@ -23,7 +23,7 @@ aside{
 	vertical-align:top;
 }
 main{
-	width:490px;
+	width:70%;
 	height:800px;
 	display:inline-block;
 	font-size:15px;
@@ -62,6 +62,9 @@ aside li{
 }
 aside li:hover{
 	background-color:#5e616a;
+}
+h1{
+	color: #6fbced;
 }
 h2,h3{
 	margin:0;
