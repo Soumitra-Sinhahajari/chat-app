@@ -15,7 +15,7 @@ const Home = (props)=>{
 
     const [propSocket, setPropSocket] = useState(null);
     const [room, setRoom] = useState(null);
-    const [rooms, setRooms ] = useState(user.joinedRoomList);
+    const [rooms, setRooms ] = useState(null);
     const [create, setCreate] = useState(false);
     const fetchRooms = async () => {
         const res = await fetch('http://localhost:8000/api/user/roomList/'+user._id);
@@ -57,7 +57,7 @@ const Home = (props)=>{
 
         // })
 
-    }, [setPropSocket]);
+    }, [setPropSocket, user]);
 
     // useEffect(() => {
     //     if (propSocket !== null) {
@@ -108,10 +108,10 @@ const Home = (props)=>{
                     <h1 align="center">{user.userName}!</h1>
                     <div id="container">
                         <aside>
-                            <SideBar user={ user } setUser={ setUser } rooms={ rooms } setRooms={ setRooms } room={ room } setRoom={ setRoom } socket={ propSocket } setCreate={ setCreate } />
+                            {rooms && (<SideBar user={ user } setUser={ setUser } rooms={ rooms } setRooms={ setRooms } room={ room } setRoom={ setRoom } socket={ propSocket } setCreate={ setCreate } />)}
                         </aside>
                         <main>
-                            {room && (<Room user={ user } room={ room } setRoom={ setRoom } socket={ propSocket } />)}
+                            {room && (<Room user={ user } room={ room } setRoom={ setRoom } setRooms = { setRooms } socket={ propSocket } />)}
                         </main>
                     </div>
                 </div>

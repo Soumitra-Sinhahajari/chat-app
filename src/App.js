@@ -20,7 +20,7 @@ function App() {
             <Login setUser={ setUser } />
           </Route>
           <Route path='/home'>
-            <Home user={ user } setUser={ setUser } />
+            {user && (<Home user={ user } setUser={ setUser } />)}
           </Route>
         </Switch>
       </BrowserRouter>

@@ -5,10 +5,10 @@ import Message from "./Message";
 // Create Room to Home redirection, improper rendering -> room becoming null
 // Send button in Room triggering socket not working -> socket is staying null
 
-const Room = ({user, room, setRoom, socket}) => {
+const Room = ({user, room, setRoom, setRooms, socket}) => {
     const [messageList, setMessageList] = useState(room === null ? [] : room.messageList);
     let dummyMessageList = room === null ? [] : room.messageList;
-    const [roomRefresh, setRoomRefresh] = useState(null);
+    const [thisRoom, setThisRoom] = useState(null);
     const thisRoomId = room === null ? null : room._id;
     const ml_ref = useRef();
 
@@ -38,6 +38,7 @@ const Room = ({user, room, setRoom, socket}) => {
             // console.log(messageList);
             dummyMessageList = room.messageList;
             setMessageList(room.messageList);
+            // setThisRoom(room);
             ml_ref.current = room.messageList;
             console.log("room 42");
         }
@@ -84,8 +85,31 @@ const Room = ({user, room, setRoom, socket}) => {
                 // dml = [...dml, data.message];
                 // ml_ref.current = 
                 // console.log(dml);
-                setRoom((room) => {if (room && room._id === data.roomId)
-                    setMessageList((messageList) => {return [...messageList, data.message]}); return room;})
+                // setRoom((room) => {if (room && room._id === data.roomId)
+                //     setMessageList((messageList) => {return [...messageList, data.message]}); return room;})
+                
+                // setThisRoom((room) => {
+                //                         if (room && room._id === data.roomId){
+                //                             setMessageList((messageList) => {return [...messageList, data.message];}); 
+                //                         }
+                //                         return room;
+                //                     });
+
+                                    if (room && room._id === data.roomId){
+                                        setMessageList((messageList) => {return [...messageList, data.message];}); 
+                                    }
+
+                setRooms((rooms) => {
+                    let dummyRooms = [...rooms];
+                    console.log('dummy rooms -----');
+                    console.log(dummyRooms);
+                    const room_index = dummyRooms.findIndex((room) => {return room.roomId === data.roomId;});
+                    if(room_index !== undefined){
+                        dummyRooms[room_index].lastChattedTime = data.message.time;
+                    }
+                    return dummyRooms;
+                });
+
                 // console.log(ro   om);
                 console.log(data);
                 
@@ -97,7 +121,7 @@ const Room = ({user, room, setRoom, socket}) => {
                 // setRoomRefresh(roomRefresh + 1);
             });
         }
-    }, [socket]);
+    }, [room, socket]);
 
     const [currentMessage, setCurrentMessage] = useState('');
 

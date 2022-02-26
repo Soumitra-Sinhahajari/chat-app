@@ -93,6 +93,7 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setC
                 console.log(dummyUserList);
                 const info = {
                     roomId : gotRoom._id,
+                    roomName : gotRoom.roomName,
                     userList : dummyUserList
                 };
                 socket.emit('room created', info);
