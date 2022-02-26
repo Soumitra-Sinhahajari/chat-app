@@ -83,7 +83,6 @@ create_and_get_common_room_details("Common chat room")
 
         socket.on('trying-to-connect', (info) => {
             const isPresent = userList.some(data => data.userName === info.userName);
-            console.log(isPresent);
             if(isPresent){
                 const user_index = userList.findIndex(data => data.userName === info.userName);
                 if(userList[user_index].isOnline === true){
@@ -111,10 +110,12 @@ create_and_get_common_room_details("Common chat room")
 
         socket.on('leaving', (info) => {
             const user_index = userList.findIndex(data => data.userName === info.userName);
-            userList[user_index].isOnline = false;
-            userList[user_index].socket = null;
-            socket.disconnect();
-            console.log('Disconnected Successfully' + socket.id);
+            if(userList[user_index] !== undefined){
+                userList[user_index].isOnline = false;
+                userList[user_index].socket = null;
+                socket.disconnect();
+                console.log('Disconnected Successfully' + socket.id);
+            }
         });
 
         socket.on('message', (info) => {
@@ -126,7 +127,7 @@ create_and_get_common_room_details("Common chat room")
 
             info.userList.forEach((user) => {
                 const user_index = userList.findIndex(data => data.userName === user.userName);
-                if (userList[user_index] != undefined){
+                if (userList[user_index] !== undefined){
                     if(userList[user_index].isOnline === true){
                         console.log('message sent to ' + user.userName);
                         console.log(send_data);
@@ -140,7 +141,7 @@ create_and_get_common_room_details("Common chat room")
             const new_room_index = global.roomList.findIndex(data => data.roomId === info.roomId);
             const new_room_details = global.roomList[new_room_index];
 
-            info.userList.forEach((user) => {
+            info.userList.forEach(async (user) => {
                 // UserModel.findOneAndUpdate({userName : user.userName}, {$push : {joinedRoomList : {roomId : info.roomId, roomName : info.roomName}}});
                 const updation_status = await UserModel.find({userName : user.userName}).updateOne({$push : {joinedRoomList : {roomId : info.roomId, roomName : info.roomName}}});
                 const updated_data = await UserModel.find({userName : user.userName});
@@ -149,7 +150,7 @@ create_and_get_common_room_details("Common chat room")
 
             info.userList.forEach((user) => {
                 const user_index = userList.findIndex(data => data.userName === user.userName);
-                if (userList[user_index] != undefined){
+                if (userList[user_index] !== undefined){
                     if(userList[user_index].isOnline === true){
                         userList[user_index].socket.emit('room created', new_room_details);
                     }
@@ -165,8 +166,10 @@ create_and_get_common_room_details("Common chat room")
 
             info.userList.forEach((user) => {
                 const user_index = userList.findIndex(data => data.userName === user.userName);
-                if(userList[user_index].isOnline === true){
-                    userList[user_index].socket.emit('user joined room',send_data);
+                if(userList[user_index] !== undefined){
+                    if(userList[user_index].isOnline === true){
+                        userList[user_index].socket.emit('user joined room',send_data);
+                    }
                 }
             });
         });
@@ -179,8 +182,10 @@ create_and_get_common_room_details("Common chat room")
 
             info.userList.forEach((user) => {
                 const user_index = userList.findIndex(data => data.userName === user.userName);
-                if(userList[user_index].isOnline === true){
-                    userList[user_index].socket.emit('user left room',send_data);
+                if(userList[user_index] !== undefined){
+                    if(userList[user_index].isOnline === true){
+                        userList[user_index].socket.emit('user left room',send_data);
+                    }
                 }
             });
         });
