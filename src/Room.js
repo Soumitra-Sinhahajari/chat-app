@@ -191,7 +191,7 @@ const Room = ({user, room, setRoom, setRooms, socket}) => {
             {/* <Message sender="John" message="Hello" time="2:59 pm" isSender={false} showName={true} />
             <Message sender="You" message="Hello" time="3:01 pm" isSender={true} showName={true} /> */}
         </div>
-        <footer>
+        <div className="chat-sending-options">
             <div className="send-message">
                 {room && 
                     (<footer>
@@ -204,7 +204,7 @@ const Room = ({user, room, setRoom, setRooms, socket}) => {
                     </footer>)  
                 }            
             </div>
-        </footer>
+        </div>
     </div>
 
     );

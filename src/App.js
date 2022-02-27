@@ -11,16 +11,13 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <h1>Welcome to chat room!</h1>
-        <header className="App-header">
-          <title>My Chat App</title>
-        </header>
+        {/* <h1>Welcome to chat room!</h1> */}
         <Switch>
           <Route exact path='/'>
             <div class="login">
               <Login setUser={ setUser } />
             </div>
-          </Route>
+            </Route>
           <Route path='/home'>
             <div class="home">
               {user && (<Home user={ user } setUser={ setUser } />)}

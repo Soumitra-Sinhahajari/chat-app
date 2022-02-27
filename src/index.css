@@ -1,10 +1,24 @@
-body {
+/* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+} */
+
+body, html{
+  height : 100%;
+  margin : 0;
+}
+
+.bg{
+  height : 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size :contain;
+  /* 'https://cdn.dribbble.com/users/1003944/screenshots/15741863/media/96a2668dbf0b4da82efca00d60011ca8.gif' */
+  background-image: url('https://img.freepik.com/free-vector/colleagues-reading-newspapers-discussing-news-together-chat-bubble-communication-mass-media-concept_48369-29696.jpg?w=996');
 }
 
 code {

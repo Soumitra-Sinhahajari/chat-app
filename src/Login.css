@@ -1,7 +1,7 @@
 /* .login-form{
     background-color: rgb(36, 97, 121);
-    height: 5cm;
-    width: 30%;
+    height: 500px;
+    width: 500px;
     align-items: center;
     margin: auto;
     border-width:2px;
@@ -10,7 +10,7 @@ border-color:black;
 border-radius: 4px;
 } */
 
-body{
+/* body{
     background: black;
     background-color: #080710;
 }
@@ -44,7 +44,7 @@ body{
     );
     right: -30px;
     bottom: -80px;
-}
+} */
 form{
     height: 520px;
     width: 400px;
@@ -54,14 +54,14 @@ form{
     top: 50%;
     left: 50%;
     border-radius: 10px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(2px);
     border: 2px solid rgba(255,255,255,0.1);
     box-shadow: 0 0 40px rgba(8,7,16,0.6);
     padding: 20px 35px;
 }
 form *{
     font-family: 'Poppins',sans-serif;
-    color: #ffffff;
+    color: #000000;
     letter-spacing: 0.5px;
     outline: none;
     border: none;
@@ -75,11 +75,11 @@ form h3{
 
 label{
     display: block;
-    margin-top: 20px;
-    font-size: 16px;
+    margin-top: 10px;
+    font-size: 30px;
     font-weight: 500;
 }
-input .login-form{
+.login-form input{
     display: block;
     height: 50px;
     width: 100%;
@@ -94,10 +94,10 @@ input .login-form{
 ::placeholder{
     color: #e5e5e5;
 }
-button .login-form{
+.login-form button{
     margin-top: 25px;
     width: 100%;
-    background-color: #ffffff;
+    background-color: #f1c13a;
     color: #080710;
     padding: 15px 0;
     font-size: 18px;

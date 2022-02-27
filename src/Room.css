@@ -1,0 +1,15 @@
+.chat-window{
+    height : 100%;
+}
+
+.chat-header{
+    height : 10%;
+}
+
+.chat-body{
+    height : 80%;
+}
+
+.chat-sending-options{
+    height : 10%;
+}
