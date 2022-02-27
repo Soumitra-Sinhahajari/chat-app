@@ -111,22 +111,28 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setC
 
     return (  
         <div className="create">
-            <label>Enter Room Name:</label>
-            <input type="text" id="roomname-input" onChange={(e) => setRoomName(e.target.value)}></input><br></br>
-            {Error && (<label id="error-message-label">{ Error }</label>)}
-            <br></br><label>Enter username to add member:</label>
-            <input type="text" id="username-input" onChange={(e) => setUserName(e.target.value)}></input>
-            <button onClick={addMember}>Add Member</button>
-            <ul>
-                {userList.map((userdata) => (
-                   <li>
-                       <div class="container">
-                           {userdata.userName}
-                       </div>
-                   </li> 
-                ))}
-            </ul>
-            <button onClick={createRoom}>Create Room</button>
+            <div className="create-button">
+                <button onClick={createRoom}>Create Room</button>
+            </div>
+            <div className="create-form">
+                <label>Room Name:</label>
+                <input type="text" id="roomname-input" placeholder="Enter room name" onChange={(e) => setRoomName(e.target.value)}></input><br></br>
+                {Error && (<label id="error-message-label">{ Error }</label>)}
+                <br></br><label>Add Member:</label>
+                <input type="text" id="username-input" placeholder="Enter username" onChange={(e) => setUserName(e.target.value)}></input>
+                <br></br>
+                <br></br>
+                <button onClick={addMember}>Add Member</button>
+                <ul>
+                    {userList.map((userdata) => (
+                    <li>
+                        <div class="container">
+                            {userdata.userName}
+                        </div>
+                    </li> 
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 }

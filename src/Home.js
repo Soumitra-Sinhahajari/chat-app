@@ -6,6 +6,7 @@ import SideBar from './SideBar';
 // import { Router } from '@reach/react';
 import { BrowserRouter, Route, Switch, useHistory } from 'react-router-dom';
 import CreateRoom from './CreateRoom';
+import ContactList from './ContactList';
 
 const Home = (props)=>{
     const user = props.user;
@@ -17,6 +18,7 @@ const Home = (props)=>{
     const [room, setRoom] = useState(null);
     const [rooms, setRooms ] = useState(null);
     const [create, setCreate] = useState(false);
+    const [newMessage, setNewMessage] = useState(false);
     const fetchRooms = async () => {
         const res = await fetch('http://localhost:8000/api/user/roomList/'+user._id);
         const resdata = await res.json();
@@ -73,6 +75,18 @@ const Home = (props)=>{
     //     }
     // }, [propSocket]);
 
+    const newRoom = (e) => {
+        e.preventDefault();
+        setNewMessage(false);
+        setCreate(true);
+    };
+
+    const newChat = (e) => {
+        e.preventDefault();
+        setCreate(false);
+        setNewMessage(true);
+    };
+
     const handleTabClosing = () => {
 
     };
@@ -103,7 +117,6 @@ const Home = (props)=>{
         <div className="homeOrCreate">
             {/* <BrowserRouter>
                 <Route path="/home"> */}
-                {create && (<CreateRoom user={ user } setUser={ setUser } room={ room } setRoom={ setRoom } rooms={ rooms } setRooms={ setRooms } socket={ propSocket } setCreate={ setCreate } />)}
                 <div className='home'>
                     <h1 align="center">{user.userName}!</h1>
                     <div id="container">
@@ -113,6 +126,16 @@ const Home = (props)=>{
                         <main>
                             {room && (<Room user={ user } room={ room } setRoom={ setRoom } setRooms = { setRooms } socket={ propSocket } />)}
                         </main>
+                        <aside>
+                            <div className="buttons">
+                                <button onClick={newChat}>Send a message</button>
+                                <button onClick={newRoom}>Create New Room</button>
+                            </div>
+                            <div className="button-subject">
+                                {newMessage && <ContactList />}
+                                {create && (<CreateRoom user={ user } setUser={ setUser } room={ room } setRoom={ setRoom } rooms={ rooms } setRooms={ setRooms } socket={ propSocket } setCreate={ setCreate } />)}
+                            </div>
+                        </aside>
                     </div>
                 </div>
                 {/* </Route>

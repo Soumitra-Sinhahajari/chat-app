@@ -58,7 +58,8 @@ ul{
 	height:690px;
 }
 li{
-	padding:10px 0;
+	/* padding:10px 10px; */
+	vertical-align: middle;
 }
 li:hover{
 	background-color:#5e616a;
@@ -66,10 +67,12 @@ li:hover{
 h2,h3{
 	margin:0;
 }
+
 li img{
 	border-radius:50%;
 	margin-left:20px;
 	margin-right:8px;
+	vertical-align: middle;
 }
 li div{
 	display:inline-block;

@@ -26,7 +26,7 @@ const Message = ({sender, message, time, isSender, showName}) => {
                     <div class="bubble alt">
                         <div class="txt">
                         <p class="name alt" align="right">You</p>
-                        <p class="message" align="right">{message}</p>
+                        <p class="message" align="left">{message}</p>
                         <br></br>
                         <span class="timestamp">{time}</span>
                         </div>

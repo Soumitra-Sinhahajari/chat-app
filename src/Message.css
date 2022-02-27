@@ -1,5 +1,5 @@
 .speech-wrapper{
-  padding: 5px 5px;
+  padding: 5px 25px;
 }
 
 .bubble{
@@ -11,10 +11,11 @@
   box-shadow: 2px 8px 5px #000;
   position: relative;
   margin: 0 0 25px;
+  overflow-wrap: break-word;
 }
 
 .alt{
-  margin: 0 0 0 56%;
+  margin: 0 0 0 59.5%;
 }
 
 .txt{
@@ -77,4 +78,17 @@
 }
 .bubble-arrow.alt:after {
   transform: rotate(45deg) scaleY(-1);
+}
+ul{
+  padding-left:0;
+  margin:0;
+  list-style-type:none;
+  overflow-y:auto;
+  height:690px;
+}
+li{
+  padding:10px 0;
+}
+li:hover{
+  background-color:#5e616a;
 }

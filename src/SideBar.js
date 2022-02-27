@@ -66,11 +66,6 @@ const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, setCrea
         }
     }, [socket]);
 
-    const startChat = (e) => {
-        e.preventDefault();
-        setCreate(true);
-        // History.push('/create');
-    };
 
     const clickRoom = async (data, e) => {
         // e.preventDefault();
@@ -93,9 +88,9 @@ const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, setCrea
 
     return (  
         <div className="side-bar">
-            <header>
+            {/* <header>
                 <button onClick={startChat}>Start New Chat</button>
-            </header>
+            </header> */}
             <ul>
                 {rooms.sort((firstRoom, secondRoom) => {return secondRoom.lastChattedTime.localeCompare(firstRoom.lastChattedTime);}).map((room) => (
                     <li>

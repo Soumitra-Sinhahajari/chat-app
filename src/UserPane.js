@@ -3,7 +3,7 @@ import './Home.css';
 const UserPane = ({room}) => {
     return (  
         <div className="user-pane">
-            <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="" />
+            <img src="https://styles.redditmedia.com/t5_2qhv3/styles/communityIcon_tnkxu195see51.png" alt="" width="65px" height="65px" align="middle" />
             <div>
                 <h2>{room.roomName}</h2>
                 <h3>
