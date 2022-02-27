@@ -29,8 +29,16 @@ router.get('/room/:id', async (req, res) => {
 
 router.post('/room', async (req, res) => {
     const new_room_data = req.body;
+    console.log(new_room_data);
 
     try{
+
+        let initMsg = 'Room created';
+        if (new_room_data.isMulticast === false && new_room_data.isBroadcast === false)
+            initMsg = 'Added you as a friend';
+
+        console.log(initMsg);        
+
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2, '0')+'-'+today.getDate().toString().padStart(2, '0');
         var time = today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0') + ":" + today.getSeconds().toString().padStart(2, '0');
@@ -38,7 +46,7 @@ router.post('/room', async (req, res) => {
 
         new_room_data.messageList.push({
             from : 'none',
-            body : 'Room creation time',
+            body : initMsg,
             time : dateTime
         });
         const new_room = await RoomModel.create(new_room_data);
