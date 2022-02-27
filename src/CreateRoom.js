@@ -35,6 +35,11 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setC
 
     const createRoom = async (e) => {
         e.preventDefault();
+        if (roomName.includes('$')) {
+            setError('Invalid Room Name.');
+            setUserList([]);
+            return;
+        }
         const dummyUserList = userList;
         const userdata = {
             userName : user.userName

@@ -6,7 +6,7 @@ const Message = ({sender, message, time, isSender, showName}) => {
         <div className="message">
             {sender==='none' && (
                 <div class="room-creation">
-                    <p class="name">Room created at {time}</p>
+                    <p class="name">{message} at {time}</p>
                 </div>
             )}
             {sender!=='none' && (

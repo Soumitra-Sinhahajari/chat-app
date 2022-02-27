@@ -104,13 +104,20 @@ const Home = (props)=>{
 
     console.log(user);
 
-    // const user1 = {
-    //     userName: 'Shawn',
-    //     isOnline: false
-    // }, user2 = {
-    //     userName: 'Ninja',
-    //     isOnline: true
-    // };
+    const parseUnicast = (roomname) => {
+        if (roomname[0] === '$' && roomname[roomname.length - 1] === '$') {
+            const tokens = roomname.split('$', 3);
+            console.log('tokens');
+            console.log(tokens);
+            if (user.userName === tokens[1]) {
+                return tokens[2];
+            } else {
+                return tokens[1];
+            }
+        } else {
+            return roomname;
+        }
+    };
 
     return (
         
@@ -121,10 +128,10 @@ const Home = (props)=>{
                     <h1 align="center">{user.userName}!</h1>
                     <div id="container">
                         <aside>
-                            {rooms && (<SideBar user={ user } setUser={ setUser } rooms={ rooms } setRooms={ setRooms } room={ room } setRoom={ setRoom } socket={ propSocket } setCreate={ setCreate } />)}
+                            {rooms && (<SideBar user={ user } setUser={ setUser } rooms={ rooms } setRooms={ setRooms } room={ room } setRoom={ setRoom } socket={ propSocket } parseUnicast={ parseUnicast } />)}
                         </aside>
                         <main>
-                            {room && (<Room user={ user } room={ room } setRoom={ setRoom } setRooms = { setRooms } socket={ propSocket } />)}
+                            {room && (<Room user={ user } room={ room } setRoom={ setRoom } setRooms = { setRooms } socket={ propSocket } parseUnicast={ parseUnicast } />)}
                         </main>
                         <aside>
                             <div className="buttons">
@@ -132,7 +139,7 @@ const Home = (props)=>{
                                 <button onClick={newRoom}>Create New Room</button>
                             </div>
                             <div className="button-subject">
-                                {newMessage && <ContactList />}
+                                {newMessage && <ContactList user={ user } setUser={ setUser } room={ room } setRoom={ setRoom } rooms={ rooms } setRooms={ setRooms } socket={ propSocket } />}
                                 {create && (<CreateRoom user={ user } setUser={ setUser } room={ room } setRoom={ setRoom } rooms={ rooms } setRooms={ setRooms } socket={ propSocket } setCreate={ setCreate } />)}
                             </div>
                         </aside>

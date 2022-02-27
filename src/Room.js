@@ -6,7 +6,7 @@ import Message from "./Message";
 // Create Room to Home redirection, improper rendering -> room becoming null
 // Send button in Room triggering socket not working -> socket is staying null
 
-const Room = ({user, room, setRoom, setRooms, socket}) => {
+const Room = ({user, room, setRoom, setRooms, socket, parseUnicast}) => {
     const [messageList, setMessageList] = useState(room === null ? [] : room.messageList);
     let dummyMessageList = room === null ? [] : room.messageList;
     const [thisRoom, setThisRoom] = useState(null);
@@ -172,7 +172,7 @@ const Room = ({user, room, setRoom, setRooms, socket}) => {
     <div className="chat-window">
         <div className="chat-header">
             <div className="user-name">
-                <p>{room && room.roomName}</p>
+                <p>{room && parseUnicast(room.roomName)}</p>
             </div>
             {/* <div className="online-status">
                 {user.isOnline && <p>Online</p>}

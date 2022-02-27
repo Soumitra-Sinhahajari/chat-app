@@ -2,7 +2,7 @@ import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserPane from "./UserPane";
 
-const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, setCreate}) => {
+const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, parseUnicast}) => {
 
     // const user = props.user;
     // const room = props.user;
@@ -95,7 +95,7 @@ const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, setCrea
                 {rooms.sort((firstRoom, secondRoom) => {return secondRoom.lastChattedTime.localeCompare(firstRoom.lastChattedTime);}).map((room) => (
                     <li>
                         <div onClick={(e) => clickRoom({room}, e)}>
-                            <UserPane room={room} />
+                            <UserPane room={room} parseUnicast={parseUnicast} />
                         </div>
                     </li>
                 ))}
