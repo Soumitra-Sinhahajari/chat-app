@@ -16,15 +16,15 @@ const UserModel = require('./models/User');
 // }
 const userList = [];
 
-// mongoose.connect('mongodb+srv://soumitra:1234@primarycluster.yssrr.mongodb.net/TrialDB');
-mongoose.connect('mongodb://localhost:27017/chatapptrialdb', 
-    {
-        authSource: "admin",
-        "user": "kdjonty",
-        "pass": "jakeperalta99"
-    }
-);
-mongoose.Promise = global.Promise;
+mongoose.connect('mongodb+srv://soumitra:1234@primarycluster.yssrr.mongodb.net/TrialDB');
+// mongoose.connect('mongodb://localhost:27017/chatapptrialdb', 
+//     {
+//         authSource: "admin",
+//         "user": "kdjonty",
+//         "pass": "jakeperalta99"
+//     }
+// );
+// mongoose.Promise = global.Promise;
 
 app.use(cors({ credetials : true}));
 
