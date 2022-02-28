@@ -37,28 +37,27 @@
 
 .chat-body{
     border-radius: 5px;
-    outline: 2px solid rgb(0, 0, 0);
+    outline: 2px solid  #f1c13a;
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 5px;
     margin-bottom: 10px;
     height : 75%;
-    border-radius: 5px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size :cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size :cover;
     /* background-size :contain; */
-    background-image : url('https://preview.redd.it/qwd83nc4xxf41.jpg?width=640&crop=smart&auto=webp&s=e82767fdf47158e80604f407ce4938e44afc6c25');
+    background-image : url('https://cdn.dribbble.com/users/2893989/screenshots/16184117/media/6f04ded8c0e12e6362c63d50bac7d7c7.png?compress=1&resize=1200x900&vertical=top');
 }
 
 .chat-sending-options{
     height : 8%;
-    border-radius: 5px;
+    /* border-radius: 5px;
     outline: 2px solid rgb(0, 0, 0);
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 5px;
-    margin-bottom: 10px;
+    margin-bottom: 10px; */
 }
 
 .chat-body ul{
@@ -75,3 +74,45 @@ li{
     background-color:#ffffff;
     opacity: 5%;
 } */
+
+.send-message input{
+    width : 60%;
+    height : 30px;
+    border-radius: 5px;
+    border: none;
+    outline: 2px solid coral;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.send-message button{
+    width :20%;
+    height : 30px;
+    border: none;
+    background-color: coral;
+    border-radius: 5px;
+    outline: 2px solid coral;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    color:aliceblue;
+}
+
+.send-message button:hover{
+    width :20%;
+    height : 30px;
+    background-color:aliceblue;
+    border-radius: 5px;
+    outline: 2px solid coral;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    color:coral;
+}

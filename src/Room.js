@@ -256,18 +256,11 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
             <Message sender="You" message="Hello" time="3:01 pm" isSender={true} showName={true} /> */}
         </div>
         <div className="chat-sending-options">
-            <div className="send-message">
-                {room && 
-                    (<footer>
-                        <input
-                            type="text"
-                            value={currentMessage}
-                            onChange={(e) => setCurrentMessage(e.target.value)}
-                        />
-                        <button onClick={sendHandler}>Send</button>  
-                    </footer>)  
-                }            
-            </div>
+            {room && 
+                (<div className="send-message">
+                    <input type="text" value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)}/>
+                    <button onClick={sendHandler}>Send</button>
+                </div>)}    
         </div>
     </div>
 
