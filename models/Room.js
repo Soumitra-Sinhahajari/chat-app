@@ -40,8 +40,9 @@ const create_and_get_common_room_details = async (room_name) => {
                 isBroadcast : true,
                 messageList : [{
                     from : 'none',
-                    body : 'Room creation time',
-                    time : dateTime
+                    body : 'Room created',
+                    time : dateTime,
+                    isImage : false
                 }]
             });
             return commonRoomDetails;

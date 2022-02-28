@@ -47,7 +47,8 @@ router.post('/room', async (req, res) => {
         new_room_data.messageList.push({
             from : 'none',
             body : initMsg,
-            time : dateTime
+            time : dateTime,
+            isImage : false
         });
         const new_room = await RoomModel.create(new_room_data);
 
