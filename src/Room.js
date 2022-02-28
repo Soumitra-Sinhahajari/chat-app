@@ -26,7 +26,46 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
     //const {room, setRoom} = useState(null);
     // const [sendButtonClicks, setSendButtonClicks] = useState(null);
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     console.log("room 28", room);
+    //     if (room !== null) {
+    //         console.log('room changed to not null');
+    //         // setMessageList(dummyMessageList);
+    //         // // messageList = dummyMessageList;
+    //         // // setMessageList(room.messageList);
+    //         // dummyMessageList = room.messageList;
+    //         // console.log('dummy');
+    //         // console.log(dummyMessageList);
+    //         // console.log('state');
+    //         // console.log(messageList);
+    //         dummyMessageList = room.messageList;
+    //         setMessageList(room.messageList);
+    //         // setThisRoom(room);
+    //         ml_ref.current = room.messageList;
+    //         console.log("room 42");
+    //     }
+    //     else{
+    //         console.log('room changed to null');
+    //     }
+    //     // fetch('http://localhost:8000/api/room' + roomId)
+    //     // .then(res => {
+    //     //     if (res.status !== 404 && res.status !== 500)
+    //     //         return res.json();
+    //     //     else
+    //     //         throw Error('Could not fetch room data.');
+    //     // })
+    //     // .then(room => {
+    //     //     setRoom(room);
+    //     //     setMessageList(room.messageList);
+    //     // });
+    // }, [room]);
+
+    // useEffect(() => {
+    //     setRoomRefresh(roomRefresh + 1);
+    //     console.log('room refreshed');
+    // },[messageList]);
+
+    useEffect((e) => {
         console.log("room 28", room);
         if (room !== null) {
             console.log('room changed to not null');
@@ -47,25 +86,6 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
         else{
             console.log('room changed to null');
         }
-        // fetch('http://localhost:8000/api/room' + roomId)
-        // .then(res => {
-        //     if (res.status !== 404 && res.status !== 500)
-        //         return res.json();
-        //     else
-        //         throw Error('Could not fetch room data.');
-        // })
-        // .then(room => {
-        //     setRoom(room);
-        //     setMessageList(room.messageList);
-        // });
-    }, [room]);
-
-    // useEffect(() => {
-    //     setRoomRefresh(roomRefresh + 1);
-    //     console.log('room refreshed');
-    // },[messageList]);
-
-    useEffect((e) => {
         if (socket !== null) {
             // console.log('inside socket(room.js)');
             // console.log(room);
@@ -100,7 +120,12 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
                                     if (room && room._id === data.roomId){
                                         console.log('received message');
                                         console.log(data.message);
-                                        setMessageList((messageList) => {return [...messageList, data.message];}); 
+                                        setMessageList((messageList) => {
+                                            if(messageList[messageList.length-1] === data.message)
+                                                return messageList;
+                                            else
+                                                return [...messageList, data.message];
+                                        }); 
                                     }
 
                 setRooms((rooms) => {
@@ -125,7 +150,7 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
                 // setRoomRefresh(roomRefresh + 1);
             });
         }
-    }, [room, socket]);
+    }, [room]);
 
     const [currentMessage, setCurrentMessage] = useState('');
     const [currentImage, setCurrentImage] = useState(null);
