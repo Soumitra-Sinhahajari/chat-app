@@ -7,7 +7,7 @@ import './Room.css';
 // Create Room to Home redirection, improper rendering -> room becoming null
 // Send button in Room triggering socket not working -> socket is staying null
 
-const Room = ({user, room, setRoom, setRooms, socket, parseUnicast}) => {
+const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
     const [messageList, setMessageList] = useState(room === null ? [] : room.messageList);
     let dummyMessageList = room === null ? [] : room.messageList;
     const [thisRoom, setThisRoom] = useState(null);
@@ -168,13 +168,76 @@ const Room = ({user, room, setRoom, setRooms, socket, parseUnicast}) => {
         
     };
 
+    const leaveRoomHandler = async () => {
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2, '0')+'-'+today.getDate().toString().padStart(2, '0');
+        var time = today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0') + ":" + today.getSeconds().toString().padStart(2, '0');
+        var dateTime = date+' '+time;
+        const msgbody = user.userName + ' left';
+        const msg = {
+            from : 'none',
+            body : msgbody,
+            time : dateTime
+        };
+        const joinedRoom = {
+            roomName : room.roomName,
+            roomId : room._id
+        };
+        const userres = await fetch('http://localhost:8000/api/user/joinedRoom/' + user._id, {
+            method : 'DELETE',
+            headers : { 'Content-Type' : 'application/json' },
+            body : JSON.stringify(joinedRoom)
+        });
+        if (userres.status !== 404 && userres.status !== 500) {
+            const roomres = await fetch('http://localhost:8000/api/room/userList/' + room._id, {
+                method : 'DELETE',
+                headers : { 'Content-Type' : 'application/json' },
+                body : JSON.stringify({userName : user.userName})
+            });
+            if (roomres.status !== 404 && roomres.status !== 500) {
+                const data = await roomres.json();
+                const res = await fetch('http://localhost:8000/api/room/messageList/' + room._id, {
+                    method : 'PUT',
+                    headers : { 'Content-Type' : 'application/json' },
+                    body : JSON.stringify(msg)
+                });
+                const info = {
+                    roomId : room._id,
+                    message : msg,
+                    userList : data.userList
+                }
+                socket.emit('message', info);
+                setRooms((rooms) => rooms.filter((currRoom) => currRoom.roomId !== room._id));
+                const common_room_index = rooms.findIndex(room => {return room.roomName === 'Common chat room'});
+                let common_room_details = rooms[common_room_index];
+                const res2 = await fetch('http://localhost:8000/api/room/' + common_room_details.roomId);
+                if (res2.status !== 404 && res2.status !== 500) {
+                    const data = await res2.json();
+                    room = data;
+                    setRoom(data);
+                    console.log('when room clicked');
+                    console.log(room);
+                } else {
+                    const data = await res.json();
+                    console.log(data.errorMessage);
+                    throw Error('Could not fetch room data.');
+                }
+            } else {
+                const data = await userres.json();
+                throw Error(data.errorMessage);
+            }
+        } else {
+            const data = await userres.json();
+            throw Error(data.errorMessage);
+        }
+    };
+
     return (  
     
     <div className="chat-window">
         <div className="chat-header">
-            <div className="user-name">
-                <p>{room && parseUnicast(room.roomName)}</p>
-            </div>
+            <p>{room && parseUnicast(room.roomName)}</p>
+            {room.isMulticast && (<button onClick={leaveRoomHandler}>Leave Room</button>)}
             {/* <div className="online-status">
                 {user.isOnline && <p>Online</p>}
             </div> */}

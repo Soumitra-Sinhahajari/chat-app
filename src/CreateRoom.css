@@ -18,6 +18,14 @@ ul {
 
 .create label {
     font-size: 18px;
+    color: #fff;
+}
+
+.create li {
+    font-size:14px;
+	color:#fff;
+	font-weight:normal;
+	margin-bottom:5px;
 }
 
 /* .create input {

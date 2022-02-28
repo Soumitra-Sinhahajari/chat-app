@@ -47,16 +47,12 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setC
         dummyUserList.push(userdata);
         setUserList(userList => [...userList, userdata]);
         console.log(dummyUserList);
-        let isMulticast = false;
-        if(userList.length > 2) {
-            isMulticast = true;
-        }
 
         const newRoom = {
             roomName : roomName,
             userList : dummyUserList,
             isBroadcast : false,
-            isMulticast : isMulticast,
+            isMulticast : true,
             messageList : []
         };
 

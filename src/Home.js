@@ -125,13 +125,13 @@ const Home = (props)=>{
             {/* <BrowserRouter>
                 <Route path="/home"> */}
                 <div className='home'>
-                    <h1 align="center">{user.userName}!</h1>
+                    <h1 align="center">Welcome {user.userName}!</h1>
                     <div id="container">
                         <aside>
                             {rooms && (<SideBar user={ user } setUser={ setUser } rooms={ rooms } setRooms={ setRooms } room={ room } setRoom={ setRoom } socket={ propSocket } parseUnicast={ parseUnicast } />)}
                         </aside>
                         <main>
-                            {room && (<Room user={ user } room={ room } setRoom={ setRoom } setRooms = { setRooms } socket={ propSocket } parseUnicast={ parseUnicast } />)}
+                            {room && (<Room user={ user } room={ room } setRoom={ setRoom } rooms={ rooms } setRooms = { setRooms } socket={ propSocket } parseUnicast={ parseUnicast } />)}
                         </main>
                         <aside>
                             <div className="buttons">

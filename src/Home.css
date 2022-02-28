@@ -8,7 +8,7 @@
 
 #container{
 	width:90%;
-	height:550px;
+	height:800px;
 	background:#ffffff;
 	margin:0 auto;
 	font-size:0;
@@ -52,6 +52,7 @@ aside input{
 	background-repeat:no-repeat;
 	background-position:170px;
 	background-size:40px;
+	opacity: 80%;
 }
 aside input::placeholder{
 	color:#fff;
@@ -61,7 +62,7 @@ aside ul{
 	margin:0;
 	list-style-type:none;
 	overflow-y:scroll;
-	height:690px;
+	height:;
 	vertical-align: middle;
 }
 aside li{
@@ -70,6 +71,7 @@ aside li{
 }
 aside li:hover{
 	background-color:#5e616a;
+	opacity: 70%;
 }
 h1{
 	width : 90%;
