@@ -6,11 +6,11 @@
 .chat-header{
     height : 7%;
     border-radius: 5px;
-    outline: 2px solid #a86c78;
-    background-color:#0aa19c;
+    outline: 2px solid #075e54;
+    background-color:#128c7e;
     margin-left: 5px;
     margin-right: 5px;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-bottom: 10px;
     font-size: 30px;
     padding-bottom: 5px;
@@ -42,7 +42,7 @@
     outline: 2px solid darkred;
     margin-left: 5px;
     margin-right: 5px;
-    margin-top: 6px;
+    margin-top: 7px;
     margin-bottom: 5px;
     font-size: 18px;
     color:aliceblue;
@@ -58,7 +58,7 @@
     outline: 2px solid darkred;
     margin-left: 5px;
     margin-right: 5px;
-    margin-top: 6px;
+    margin-top: 7px;
     margin-bottom: 5px;
     font-size: 18px;
     color:darkred;
@@ -67,17 +67,17 @@
 
 .chat-body{
     border-radius: 5px;
-    outline: 2px solid  #f1c13a;
+    outline: 2px solid #25d366;
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 5px;
     margin-bottom: 10px;
-    height : 75%;
+    height : 81%;
     background-position: center;
     background-repeat: no-repeat;
     background-size :cover;
     /* background-size :contain; */
-    background-image : url('https://cdn.dribbble.com/users/2893989/screenshots/16184117/media/6f04ded8c0e12e6362c63d50bac7d7c7.png?compress=1&resize=1200x900&vertical=top');
+    background-image : url('https://preview.redd.it/qwd83nc4xxf41.jpg?width=640&crop=smart&auto=webp&s=e82767fdf47158e80604f407ce4938e44afc6c25');
 }
 
 .chat-sending-options{
@@ -106,11 +106,11 @@ li{
 } */
 
 .send-message input{
-    width : 55.5%;
+    width : 54%;
     height : 30px;
     border-radius: 5px;
     border: none;
-    outline: 2px solid coral;
+    outline: 2px solid #b1c6c7;
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 5px;
@@ -118,13 +118,17 @@ li{
     font-size: 14px;
 }
 
+.send-message input::placeholder{
+    color:rgb(119, 118, 118);
+}
+
 .send-message button{
     width :20%;
     height : 30px;
     border: none;
-    background-color: coral;
+    background-color: #25d366;
     border-radius: 5px;
-    outline: 2px solid coral;
+    outline: 2px solid #25d366;
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 5px;
@@ -138,11 +142,11 @@ li{
     height : 30px;
     background-color:aliceblue;
     border-radius: 5px;
-    outline: 2px solid coral;
+    outline: 2px solid #25d366;
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
     font-size: 20px;
-    color:coral;
+    color:#25d366;
 }

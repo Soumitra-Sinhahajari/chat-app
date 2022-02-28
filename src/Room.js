@@ -258,7 +258,7 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
         <div className="chat-sending-options">
             {room && 
                 (<div className="send-message">
-                    <input type="text" value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)}/>
+                    <input type="text" placeHolder = "Enter new chat" value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)}/>
                     <button onClick={sendHandler}>Send</button>
                     <button onClick={sendHandler}>Send Image</button>
                 </div>)}    

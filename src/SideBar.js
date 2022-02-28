@@ -1,6 +1,7 @@
 import { useHistory } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UserPane from "./UserPane";
+import './SideBar.css';
 
 const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, parseUnicast}) => {
 

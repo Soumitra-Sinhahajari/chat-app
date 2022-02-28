@@ -7,30 +7,40 @@
 } */
 
 #container{
-	width:90%;
-	height:800px;
+	width:95%;
+	height:550px;
+	min-height: 550px;
+	max-height: 800px;
 	background:#ffffff;
 	margin:0 auto;
 	font-size:0;
 	border-radius:5px;
 	overflow:hidden;
+	/* position: relative; */
 }
 aside{
 	width:20%;
-	height:100%;
+	height:95%;
+	position: relative;
+	border-radius: 5px;
+    outline: 2px solid #000000;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 55px;
 	/* background-color:#3b3e49; */
 	display:inline-block;
 	font-size:15px;
 	vertical-align:top;
 	background-position: center;
-  background-repeat: no-repeat;
-  background-size :cover;
+  	background-repeat: no-repeat;
+  	background-size :cover;
     /* background-size :contain; */
     background-image : url('https://i.pinimg.com/originals/85/ec/df/85ecdf1c3611ecc9b7fa85282d9526e0.jpg');
 }
 main{
-	width:60%;
-	height:100%;
+	width:53%;
+	height:95%;
 	display:inline-block;
 	font-size:15px;
 	vertical-align:top;
@@ -62,7 +72,7 @@ aside ul{
 	margin:0;
 	list-style-type:none;
 	overflow-y:scroll;
-	height:800px;
+	height:95%;
 	vertical-align: middle;
 }
 aside li{
@@ -84,20 +94,33 @@ h1{
 	margin-left: 5%;
 }
 
-
+.user-logout{
+	width: 90%;
+	border-radius: 5px;
+	padding-left: 10px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+	margin-left: 5%;
+	background-color: #000000;
+}
 
 .user-logout button{
 	font-size: 30px;
+	border: none;
 	background-repeat: no-repeat;
+	background-color: #000000;
+	color:aliceblue;
 }
 
 .user-logout button:hover span{
+	border: none;
 	display: none;
 }
 
 .user-logout button:hover::before {
+	border: none;
 	content: attr(data-hover);
-	background-color: darkred;
+	background-color: #000000;
 	color: aliceblue;
 }
 
