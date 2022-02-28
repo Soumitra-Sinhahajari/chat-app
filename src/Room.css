@@ -6,33 +6,63 @@
 .chat-header{
     height : 7%;
     border-radius: 5px;
-    outline: 2px solid rgb(0, 0, 0);
+    outline: 2px solid #a86c78;
+    background-color:#0aa19c;
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 30px;
-    padding-bottom: 0px;
+    padding-bottom: 5px;
     vertical-align: middle;
+    display:flex;
+    position: relative;
+    justify-content: center;
     /* outline-offset: -5px; */
 }
 
 .chat-header p {
+    width: 75%;
     margin-left: 5px;
     margin-right: 5px;
-    margin-top: 0px;
-    margin-bottom: 10px;
+    margin-top: 8px;
+    margin-bottom: 5px;
     vertical-align: middle;
-    display: inline;
+    display: inline-block;
+    align-self: center;
+    color: aliceblue;
 }
 
 .chat-header button {
-    padding: 5px 10px;
+    width :20%;
+    height: 80%;
+    border: none;
+    background-color: darkred;
     border-radius: 5px;
-    display: inline;
-    background-color: #e60404;
-    color: white;
-    margin: 10px auto 0px auto;
+    outline: 2px solid darkred;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 6px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    color:aliceblue;
+    
+}
+
+.chat-header button:hover {
+    width :20%;
+    height: 80%;
+    border: none;
+    background-color: aliceblue;
+    border-radius: 5px;
+    outline: 2px solid darkred;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 6px;
+    margin-bottom: 5px;
+    font-size: 18px;
+    color:darkred;
+    
 }
 
 .chat-body{
@@ -76,7 +106,7 @@ li{
 } */
 
 .send-message input{
-    width : 60%;
+    width : 55.5%;
     height : 30px;
     border-radius: 5px;
     border: none;
@@ -99,7 +129,7 @@ li{
     margin-right: 5px;
     margin-top: 5px;
     margin-bottom: 5px;
-    font-size: 20px;
+    font-size: 18px;
     color:aliceblue;
 }
 

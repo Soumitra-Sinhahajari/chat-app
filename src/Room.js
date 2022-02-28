@@ -260,6 +260,7 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
                 (<div className="send-message">
                     <input type="text" value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)}/>
                     <button onClick={sendHandler}>Send</button>
+                    <button onClick={sendHandler}>Send Image</button>
                 </div>)}    
         </div>
     </div>
