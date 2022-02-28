@@ -39,10 +39,22 @@
   color: #357951;
 }
 
-.message{
+/* .message{
   font-size: 14px;
   margin: 0;
   color: #2b2b2b;
+} */
+
+.text-message {
+  font-size: 14px;
+  margin: 0;
+  color: #2b2b2b;
+}
+
+.message img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .timestamp{

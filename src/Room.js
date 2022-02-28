@@ -98,6 +98,8 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
                 //                     });
 
                                     if (room && room._id === data.roomId){
+                                        console.log('received message');
+                                        console.log(data.message);
                                         setMessageList((messageList) => {return [...messageList, data.message];}); 
                                     }
 
@@ -126,6 +128,21 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
     }, [room, socket]);
 
     const [currentMessage, setCurrentMessage] = useState('');
+    const [currentImage, setCurrentImage] = useState(null);
+
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+          const fileReader = new FileReader();
+          fileReader.readAsDataURL(file);
+          fileReader.onload = () => {
+            resolve(fileReader.result);
+          };
+    
+          fileReader.onerror = (err) => {
+            reject(err);
+          };
+        });
+    };
 
     const sendHandler = async () => {
 
@@ -137,7 +154,8 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
         const msg = {
             from : user.userName,
             body : currentMessage,
-            time : dateTime
+            time : dateTime,
+            isImage : false
         }
 
         // dummyMessageList.push(msg);
@@ -168,6 +186,44 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
         
     };
 
+    const sendImageHandler = async () => {
+
+        console.log(currentImage);
+        const imgbase64 = await convertToBase64(currentImage);
+
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2, '0')+'-'+today.getDate().toString().padStart(2, '0');
+        var time = today.getHours().toString().padStart(2, '0') + ":" + today.getMinutes().toString().padStart(2, '0') + ":" + today.getSeconds().toString().padStart(2, '0');
+        var dateTime = date+' '+time;
+
+        const msg = {
+            from : user.userName,
+            body : imgbase64,
+            time : dateTime,
+            isImage : true
+        };
+
+        const res = await fetch('http://localhost:8000/api/room/messageList/' + room._id, {
+            method : 'PUT',
+            headers : { 'Content-Type' : 'application/json' },
+            body : JSON.stringify(msg)
+        });
+
+        const resdata = await res.json();
+
+        const info = {
+            roomId : room._id,
+            message : msg,
+            userList : resdata.userList
+        };
+
+        console.log('when send button clicked');
+        console.log(info);
+
+        socket.emit('message', info);
+
+    };
+
     const leaveRoomHandler = async () => {
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2, '0')+'-'+today.getDate().toString().padStart(2, '0');
@@ -177,7 +233,8 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
         const msg = {
             from : 'none',
             body : msgbody,
-            time : dateTime
+            time : dateTime,
+            isImage : false
         };
         const joinedRoom = {
             roomName : room.roomName,
@@ -247,7 +304,7 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
             <ul>
                 {messageList && messageList.map((message,i) => (
                     <li>
-                        <Message key={i} sender={message.from} message={message.body} time={message.time} isSender={message.from === user.userName} showName={true} />
+                        <Message key={i} sender={message.from} message={message.body} time={message.time} isImage={message.isImage} isSender={message.from === user.userName} showName={true} />
                     </li>
                 ))}
             </ul>
@@ -260,7 +317,8 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
                 (<div className="send-message">
                     <input type="text" placeHolder = "Enter new chat" value={currentMessage} onChange={(e) => setCurrentMessage(e.target.value)}/>
                     <button onClick={sendHandler}>Send</button>
-                    <button onClick={sendHandler}>Send Image</button>
+                    <input type="file" accept="image/*" onChange={(e) => setCurrentImage(e.target.files[0])} />
+                    <button onClick={sendImageHandler}>Send Image</button>
                 </div>)}    
         </div>
     </div>

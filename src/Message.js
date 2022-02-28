@@ -1,6 +1,7 @@
 import './Message.css';
 
-const Message = ({sender, message, time, isSender, showName}) => {
+const Message = ({sender, message, time, isImage, isSender, showName}) => {
+
 
     return (  
         <div className="message">
@@ -15,7 +16,10 @@ const Message = ({sender, message, time, isSender, showName}) => {
                     <div class="bubble">
                         <div class="txt">
                         <p class="name" align="left">{sender}</p>
-                        <p class="message" align="left">{message}</p>
+                        <div className="message">
+                            {!isImage && (<p className="text-message">{message}</p>)}
+                            {isImage && (<img className="image-message" src={message} />)}
+                        </div>
                         <br></br>
                         <span class="timestamp">{time}</span>
                         </div>
@@ -26,7 +30,10 @@ const Message = ({sender, message, time, isSender, showName}) => {
                     <div class="bubble alt">
                         <div class="txt">
                         <p class="name alt" align="right">You</p>
-                        <p class="message" align="left">{message}</p>
+                        <div className="message">
+                            {!isImage && (<p className="text-message">{message}</p>)}
+                            {isImage && (<img className="image-message" src={message} />)}
+                        </div>
                         <br></br>
                         <span class="timestamp">{time}</span>
                         </div>
