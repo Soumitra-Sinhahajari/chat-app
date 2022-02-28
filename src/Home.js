@@ -48,11 +48,12 @@ const Home = (props)=>{
             socket.emit('leaving', {
                 userName : user.userName   
             });
+            socket.disconnect();
+            History.push('/404');
         });
 
         socket.on('disconnect', () => {
             socket.disconnect();
-            History.push('/404');
         });
 
         // socket.on('message', {
@@ -99,6 +100,15 @@ const Home = (props)=>{
         e.returnValue = 'You are being logged out.';
     };
 
+    const logoutHandler = (currSocket, e) => {
+        console.log('currSocket is');
+        console.log(currSocket.id);
+        currSocket.emit('leaving', {
+            userName : user.userName
+        });
+        History.push('/');
+    };
+
     window.addEventListener('beforeunload', unloadCallback);
     window.addEventListener('unload', handleTabClosing);
 
@@ -125,7 +135,9 @@ const Home = (props)=>{
             {/* <BrowserRouter>
                 <Route path="/home"> */}
                 <div className='home'>
-                    <h1 align="center">Welcome {user.userName}!</h1>
+                    <div className='user-logout'>
+                        <button align="center" data-hover="Logout" onClick={(e) => logoutHandler(propSocket, e)}><span>Welcome {user.userName}!</span></button>
+                    </div>
                     <div id="container">
                         <aside>
                             {rooms && (<SideBar user={ user } setUser={ setUser } rooms={ rooms } setRooms={ setRooms } room={ room } setRoom={ setRoom } socket={ propSocket } parseUnicast={ parseUnicast } />)}

@@ -8,7 +8,7 @@
 
 #container{
 	width:90%;
-	height:550px;
+	height:800px;
 	background:#ffffff;
 	margin:0 auto;
 	font-size:0;
@@ -83,6 +83,24 @@ h1{
 	margin-bottom: 5px;
 	margin-left: 5%;
 }
+
+
+
+.user-logout button{
+	font-size: 30px;
+	background-repeat: no-repeat;
+}
+
+.user-logout button:hover span{
+	display: none;
+}
+
+.user-logout button:hover::before {
+	content: attr(data-hover);
+	background-color: darkred;
+	color: aliceblue;
+}
+
 h2,h3{
 	margin:0;
 }
