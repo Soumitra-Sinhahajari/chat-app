@@ -83,7 +83,7 @@ label{
     display: block;
     height: 50px;
     width: 100%;
-    background-color: rgba(255,255,255,0.07);
+    background-color: rgba(255, 255, 255, 0.829);
     border-radius: 3px;
     padding: 0 5px;
     margin-top: 5px;
@@ -92,7 +92,7 @@ label{
     opacity: 100%;
 }
 ::placeholder{
-    color: #e5e5e5;
+    color: #141414;
 }
 .login-form button{
     margin-top: 25px;

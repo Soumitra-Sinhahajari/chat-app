@@ -1,29 +1,58 @@
 .chat-window{
     height : 100%;
+    vertical-align:top;
 }
 
 .chat-header{
-    height : 10%;
+    height : 7%;
+    border-radius: 5px;
+    outline: 2px solid rgb(0, 0, 0);
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    font-size: 30px;
+    padding-bottom: 0px;
+    /* outline-offset: -5px; */
 }
 
 .chat-body{
-    height : 80%;
+    border-radius: 5px;
+    outline: 2px solid rgb(0, 0, 0);
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    height : 75%;
+    border-radius: 5px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size :cover;
+    /* background-size :contain; */
+    background-image : url('https://preview.redd.it/qwd83nc4xxf41.jpg?width=640&crop=smart&auto=webp&s=e82767fdf47158e80604f407ce4938e44afc6c25');
 }
 
 .chat-sending-options{
-    height : 10%;
+    height : 8%;
+    border-radius: 5px;
+    outline: 2px solid rgb(0, 0, 0);
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
-ul{
+.chat-body ul{
     padding-left:0;
     margin:0;
     list-style-type:none;
     overflow-y:auto;
-    height:690px;
+    height:100%;
   }
 li{
-padding:10px 0;
+    padding:10px 0;
 }
-li:hover{
-background-color:#5e616a;
-}
+/* .chat-body li:hover{
+    background-color:#ffffff;
+    opacity: 5%;
+} */

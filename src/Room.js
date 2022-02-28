@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import Message from "./Message";
+import './Room.css';
 
 
 // Problems: 
@@ -178,7 +179,7 @@ const Room = ({user, room, setRoom, setRooms, socket, parseUnicast}) => {
                 {user.isOnline && <p>Online</p>}
             </div> */}
         </div>
-        <hr></hr>
+        {/* <hr></hr> */}
         <div className="chat-body">
             <ul>
                 {messageList && messageList.map((message,i) => (

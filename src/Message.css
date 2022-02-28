@@ -6,12 +6,13 @@
   width: 40%;
   height: auto;
   display: block;
-  background: #f5f5f5;
-  border-radius: 4px;
+  background: #dcf8c6;
+  border-radius: 10px;
   box-shadow: 2px 8px 5px #000;
   position: relative;
   margin: 0 0 25px;
   overflow-wrap: break-word;
+  opacity: 90%;
 }
 
 .alt{
@@ -24,9 +25,9 @@
 
 .name{
   font-weight: 600;
-  font-size: 12px;
+  font-size: 14px;
   margin: 0 0 4px;
-  color: #3498db;
+  color: #125785;
 }
 
 .span{
@@ -35,21 +36,21 @@
 }
 
 .alt .name{
-  color: #2ecc71;
+  color: #357951;
 }
 
 .message{
-  font-size: 12px;
+  font-size: 14px;
   margin: 0;
   color: #2b2b2b;
 }
 
 .timestamp{
-  font-size: 11px;
+  font-size: 12px;
   position: absolute;
   bottom: 8px;
   right: 10px;
-  text-transform: uppercase; color: #999
+  text-transform: uppercase; color: rgb(105, 105, 105)
 }
 
 .bubble-arrow {
@@ -70,7 +71,8 @@
   content: "";
   position: absolute;
   border: 0 solid transparent;
-  border-top: 9px solid #f5f5f5;
+  border-top: 9px solid  #dcf8c6;
+
   border-radius: 0 20px 0;
   width: 15px;
   height: 30px;
@@ -79,7 +81,7 @@
 .bubble-arrow.alt:after {
   transform: rotate(45deg) scaleY(-1);
 }
-ul{
+/* ul{
   padding-left:0;
   margin:0;
   list-style-type:none;
@@ -91,4 +93,4 @@ li{
 }
 li:hover{
   background-color:#5e616a;
-}
+} */
