@@ -23,7 +23,7 @@ aside{
 	height:95%;
 	position: relative;
 	border-radius: 5px;
-    outline: 2px solid #000000;
+    outline: 3px solid #278dff;
     margin-left: 5px;
     margin-right: 5px;
     margin-top: 5px;
@@ -35,8 +35,9 @@ aside{
 	background-position: center;
   	background-repeat: no-repeat;
   	background-size :cover;
+	  background-color: #278cff21;
     /* background-size :contain; */
-    background-image : url('https://i.pinimg.com/originals/85/ec/df/85ecdf1c3611ecc9b7fa85282d9526e0.jpg');
+    /* background-image : url('https://i.pinimg.com/originals/85/ec/df/85ecdf1c3611ecc9b7fa85282d9526e0.jpg'); */
 }
 main{
 	width:53%;
@@ -80,8 +81,8 @@ aside li{
 	vertical-align: middle;
 }
 aside li:hover{
-	background-color:#5e616a;
-	opacity: 70%;
+	background-color:#278dff;
+	opacity: 100%;
 }
 h1{
 	width : 90%;
@@ -98,17 +99,17 @@ h1{
 	width: 90%;
 	border-radius: 5px;
 	padding-left: 10px;
-	margin-top: 5px;
-	margin-bottom: 0px;
+	margin-top: 10px;
+	margin-bottom: 5px;
 	margin-left: 5%;
-	background-color: #000000;
+	background-color: #278dff;
 }
 
 .user-logout button{
 	font-size: 30px;
 	border: none;
 	background-repeat: no-repeat;
-	background-color: #000000;
+	background-color: #278dff;
 	color:aliceblue;
 }
 
@@ -120,7 +121,7 @@ h1{
 .user-logout button:hover::before {
 	border: none;
 	content: attr(data-hover);
-	background-color: #000000;
+	background-color: #278dff;
 	color: aliceblue;
 }
 
@@ -129,26 +130,27 @@ h2,h3{
 }
 aside li img{
 	border-radius:50%;
-	margin-left:20px;
+	/* margin-left:20px; */
 	margin-right:8px;
 	vertical-align: middle;
 }
 aside li div{
 	display:inline-block;
 	vertical-align:top;
-	margin-top:12px;
+	/* margin-top:5px; */
 	vertical-align: middle;
 }
 aside li h2{
-	font-size:14px;
-	color:#fff;
+	font-size:20px;
+	color:rgb(0, 0, 0);
 	font-weight:normal;
 	margin-bottom:5px;
 	vertical-align: middle;
 }
+
 aside li h3{
-	font-size:12px;
-	color:#7e818a;
+	font-size:14px;
+	color:#45464b;
 	font-weight:normal;
 	vertical-align: middle;
 }

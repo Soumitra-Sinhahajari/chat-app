@@ -6,7 +6,8 @@
   width: 40%;
   height: auto;
   display: block;
-  background: #dcf8c6;
+  /* background: #e46b82; */
+  background: #f1c13a;
   border-radius: 10px;
   box-shadow: 2px 8px 5px #000;
   position: relative;
@@ -46,7 +47,7 @@
 } */
 
 .text-message {
-  font-size: 14px;
+  font-size: 16px;
   margin: 0;
   color: #2b2b2b;
 }
@@ -83,7 +84,7 @@
   content: "";
   position: absolute;
   border: 0 solid transparent;
-  border-top: 9px solid   #dcf8c6;
+  border-top: 9px solid   #f1c13a;
 
   border-radius: 0 20px 0;
   width: 15px;
