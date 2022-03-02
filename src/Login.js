@@ -18,7 +18,7 @@ const Login = (props) => {
         if(newUserName === null){
             setError('Please enter an user id!');
         }
-        const res = await fetch('http://localhost:8000/api/user/'+newUserName+'/'+password, {
+        const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/user/'+newUserName+'/'+password, {
             method : 'GET',
             headers : { 'Content-Type' : 'application/json' }
         });
@@ -49,7 +49,7 @@ const Login = (props) => {
         if(newUserName === null){
             setError('Please enter an user id!');
         }
-        const res = await fetch('http://localhost:8000/api/user', {
+        const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/user', {
             method : 'POST',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify(user)
@@ -58,7 +58,7 @@ const Login = (props) => {
             const user = await res.json();
             setUser(user);
             const commonRoomId = user.joinedRoomList[0].roomId;
-            const data = await fetch('http://localhost:8000/api/room/userList/'+commonRoomId, {
+            const data = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/room/userList/'+commonRoomId, {
                 method : 'PUT',
                 headers : { 'Content-Type' : 'application/json' },
                 body : JSON.stringify({userName : user.userName})

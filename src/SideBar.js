@@ -13,7 +13,7 @@ const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, parseUn
     console.log(rooms);
 
     const addNewRoom = async (newRoomData) => {
-        const res = await fetch('http://localhost:8000/user/joinedRoom/' + user._id, {
+        const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/user/joinedRoom/' + user._id, {
             method : 'PUT',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify(newRoomData)
@@ -26,7 +26,7 @@ const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, parseUn
     useEffect(async () => {
         const common_room_index = rooms.findIndex(room => {return room.roomName === 'Common chat room'});
         let common_room_details = rooms[common_room_index];
-        const res = await fetch('http://localhost:8000/api/room/' + common_room_details.roomId);
+        const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/room/' + common_room_details.roomId);
         if (res.status !== 404 && res.status !== 500) {
             const data = await res.json();
             room = data;
@@ -71,7 +71,7 @@ const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, parseUn
     const clickRoom = async (data, e) => {
         // e.preventDefault();
         // Room redirect(history)
-        const res = await fetch('http://localhost:8000/api/room/' + data.room.roomId);
+        const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/room/' + data.room.roomId);
         if (res.status !== 404 && res.status !== 500) {
             const data = await res.json();
             room = data;

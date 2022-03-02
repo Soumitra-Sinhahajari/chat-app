@@ -17,7 +17,7 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setC
     const addMember = async (e) => {
         e.preventDefault();
         // Check if valid username using api
-        const res = await fetch('http://localhost:8000/api/user/check/'+userName);
+        const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/user/check/'+userName);
         if (res.status !== 404 && res.status !== 500) {
             // const data = await res.json();
             // console.log(data);
@@ -57,7 +57,7 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setC
             messageList : []
         };
 
-        const res = await fetch('http://localhost:8000/api/room', {
+        const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/room', {
             method : 'POST',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify(newRoom)
@@ -76,7 +76,7 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setC
                 roomName : gotRoom.roomName,
                 roomId : gotRoom._id,
             };
-            const res2 = await fetch('http://localhost:8000/api/user/joinedRoom/'+user._id, {
+            const res2 = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/user/joinedRoom/'+user._id, {
                 method : 'PUT',
                 headers : { 'Content-Type' : 'application/json' },
                 body : JSON.stringify(write_new_room)

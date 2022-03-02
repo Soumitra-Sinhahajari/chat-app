@@ -20,7 +20,7 @@ const Home = (props)=>{
     const [create, setCreate] = useState(false);
     const [newMessage, setNewMessage] = useState(false);
     const fetchRooms = async () => {
-        const res = await fetch('http://localhost:8000/api/user/roomList/'+user._id);
+        const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/user/roomList/'+user._id);
         const resdata = await res.json();
         console.log('got user list from server ');
         console.log(resdata);
@@ -31,7 +31,7 @@ const Home = (props)=>{
     const History = useHistory();
 
     useEffect(() => {
-        socket = io.connect('http://localhost:8000');
+        socket = io.connect('https://chat-app-by-kd-ss.herokuapp.com');
         setPropSocket(socket); 
         console.log('socket connected');
         socket.emit('trying-to-connect', {

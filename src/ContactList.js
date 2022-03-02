@@ -5,7 +5,7 @@ const ContactList = ({user, setUser, room, setRoom, rooms, setRooms, socket}) =>
     const [allUsers, setAllUsers] = useState(null);
 
     const getAllUsers = async () => {
-        const res = await fetch('http://localhost:8000/api/user/all');
+        const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/user/all');
         if (res.status !== 500) {
             const resdata = await res.json();
             console.log('got contact list from server');
@@ -30,7 +30,7 @@ const ContactList = ({user, setUser, room, setRoom, rooms, setRooms, socket}) =>
         const possible1 = '$'+user.userName+'$'+data.userName+'$', possible2 = '$'+data.userName+'$'+user.userName+'$';
         const isPresent = rooms.find((currRoom) => (currRoom.roomName === possible1 || currRoom.roomName === possible2));
         if (isPresent) {
-            const res = await fetch('http://localhost:8000/api/room/' + isPresent.roomId);
+            const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/room/' + isPresent.roomId);
             if (res.status !== 404 && res.status !== 500) {
                 const roomdata = await res.json();
                 room = roomdata;
@@ -56,7 +56,7 @@ const ContactList = ({user, setUser, room, setRoom, rooms, setRooms, socket}) =>
                 messageList : []
             };
     
-            const res = await fetch('http://localhost:8000/api/room', {
+            const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/room', {
                 method : 'POST',
                 headers : { 'Content-Type' : 'application/json' },
                 body : JSON.stringify(newRoom)
@@ -75,7 +75,7 @@ const ContactList = ({user, setUser, room, setRoom, rooms, setRooms, socket}) =>
                     roomName : gotRoom.roomName,
                     roomId : gotRoom._id,
                 };
-                const res2 = await fetch('http://localhost:8000/api/user/joinedRoom/'+user._id, {
+                const res2 = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/user/joinedRoom/'+user._id, {
                     method : 'PUT',
                     headers : { 'Content-Type' : 'application/json' },
                     body : JSON.stringify(write_new_room)

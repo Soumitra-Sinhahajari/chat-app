@@ -185,7 +185,7 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
 
         // dummyMessageList.push(msg);
 
-        const res = await fetch('http://localhost:8000/api/room/messageList/' + room._id, {
+        const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/room/messageList/' + room._id, {
             method : 'PUT',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify(msg)
@@ -229,7 +229,7 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
             isImage : true
         };
 
-        const res = await fetch('http://localhost:8000/api/room/messageList/' + room._id, {
+        const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/room/messageList/' + room._id, {
             method : 'PUT',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify(msg)
@@ -267,20 +267,20 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
             roomName : room.roomName,
             roomId : room._id
         };
-        const userres = await fetch('http://localhost:8000/api/user/joinedRoom/' + user._id, {
+        const userres = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/user/joinedRoom/' + user._id, {
             method : 'DELETE',
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify(joinedRoom)
         });
         if (userres.status !== 404 && userres.status !== 500) {
-            const roomres = await fetch('http://localhost:8000/api/room/userList/' + room._id, {
+            const roomres = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/room/userList/' + room._id, {
                 method : 'DELETE',
                 headers : { 'Content-Type' : 'application/json' },
                 body : JSON.stringify({userName : user.userName})
             });
             if (roomres.status !== 404 && roomres.status !== 500) {
                 const data = await roomres.json();
-                const res = await fetch('http://localhost:8000/api/room/messageList/' + room._id, {
+                const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/room/messageList/' + room._id, {
                     method : 'PUT',
                     headers : { 'Content-Type' : 'application/json' },
                     body : JSON.stringify(msg)
@@ -295,7 +295,7 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
                 setRooms((rooms) => rooms.filter((currRoom) => currRoom.roomId !== room._id));
                 const common_room_index = rooms.findIndex(room => {return room.roomName === 'Common chat room'});
                 let common_room_details = rooms[common_room_index];
-                const res2 = await fetch('http://localhost:8000/api/room/' + common_room_details.roomId);
+                const res2 = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/room/' + common_room_details.roomId);
                 if (res2.status !== 404 && res2.status !== 500) {
                     const data = await res2.json();
                     room = data;
