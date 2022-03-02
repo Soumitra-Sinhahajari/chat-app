@@ -7,7 +7,7 @@ const socket = require('socket.io');
 const mongoose = require('mongoose');
 const {RoomModel, create_and_get_common_room_details} = require('./models/Room');
 const UserModel = require('./models/User');
-
+require ('dotenv').config();
 //  user-socket list structure here
 // {
 //     userName : 'Will store the unique user name', 
@@ -16,15 +16,15 @@ const UserModel = require('./models/User');
 // }
 const userList = [];
 
-// mongoose.connect('mongodb+srv://soumitra:1234@primarycluster.yssrr.mongodb.net/TrialDB');
-mongoose.connect('mongodb://localhost:27017/chatapptrialdb', 
-    {
-        authSource: "admin",
-        "user": "kdjonty",
-        "pass": "jakeperalta99"
-    }
-);
-mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGO_URI);
+// mongoose.connect('mongodb://localhost:27017/chatapptrialdb', 
+//     {
+//         authSource: "admin",
+//         "user": "kdjonty",
+//         "pass": "jakeperalta99"
+//     }
+// );
+// mongoose.Promise = global.Promise;
 
 app.use(cors({ credetials : true}));
 
@@ -42,6 +42,9 @@ app.use('/api', user_routes);
 
 app.use('/api', room_routes);
 
+app.get ('/', (req, res) => {
+    res.status(200).send("Backend server running ... ");
+})
 
 create_and_get_common_room_details("Common chat room")
 .then(async (res) => {
@@ -58,7 +61,7 @@ create_and_get_common_room_details("Common chat room")
     });
 
     console.log(roomList);
-    const server = app.listen(8000, ()=>{
+    const server = app.listen(process.env.PORT || 8000, ()=>{
         console.log('Server started successfully');
     });
 
