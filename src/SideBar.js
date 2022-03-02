@@ -5,11 +5,6 @@ import './SideBar.css';
 
 const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, parseUnicast}) => {
 
-    // const user = props.user;
-    // const room = props.user;
-    // const setRoom = props.setRoom;
-
-    // const [rooms, setRooms ] = useState(user.joinedRoomList);
     console.log(rooms);
 
     const addNewRoom = async (newRoomData) => {
@@ -18,7 +13,7 @@ const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, parseUn
             headers : { 'Content-Type' : 'application/json' },
             body : JSON.stringify(newRoomData)
         });
-        // const resdata = await res.json();
+        
     };
     
     const History = useHistory();
@@ -33,7 +28,7 @@ const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, parseUn
             setRoom(data);
             console.log('when room clicked');
             console.log(room);
-            // setRoomRefresh(roomRefresh + 1);
+            
         } else {
             const data = await res.json();
             console.log(data.errorMessage);
@@ -58,9 +53,6 @@ const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, parseUn
                     lastChattedTime : info.lastChattedTime
                 };
 
-                // setUser((user) => { let dummyUser = {...user};
-                //                     dummyUser.joinedRoomList.push(new_room_data);
-                //                     return dummyUser;});
 
                 setRooms((roomList) => [new_room_data, ...roomList]);
             });
@@ -78,20 +70,18 @@ const SideBar = ({user, setUser, rooms, setRooms, room, setRoom, socket, parseUn
             setRoom(data);
             console.log('when room clicked');
             console.log(room);
-            // setRoomRefresh(roomRefresh + 1);
+            
         } else {
             const data = await res.json();
             console.log(data.errorMessage);
             throw Error('Could not fetch room data.');
         }
-        // History.push('/home/' + data.room.roomId);
+        
     };
 
     return (  
         <div className="side-bar">
-            {/* <header>
-                <button onClick={startChat}>Start New Chat</button>
-            </header> */}
+            
             <ul>
                 {rooms.sort((firstRoom, secondRoom) => {return secondRoom.lastChattedTime.localeCompare(firstRoom.lastChattedTime);}).map((room) => (
                     <li>

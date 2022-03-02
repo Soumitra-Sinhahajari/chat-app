@@ -3,10 +3,6 @@ import Message from "./Message";
 import './Room.css';
 
 
-// Problems: 
-// Create Room to Home redirection, improper rendering -> room becoming null
-// Send button in Room triggering socket not working -> socket is staying null
-
 const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
     const [messageList, setMessageList] = useState(room === null ? [] : room.messageList);
     let dummyMessageList = room === null ? [] : room.messageList;
@@ -15,68 +11,11 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
     const ml_ref = useRef();
 
 
-    // console.log('room page rendered');
-    // console.log(room);
-
-    // useEffect(async (e)=>{
-    //     await setMessageList(ml_ref.current);
-    // }, []);
-    
-    // console.log(messageList);
-    //const {room, setRoom} = useState(null);
-    // const [sendButtonClicks, setSendButtonClicks] = useState(null);
-
-    // useEffect(() => {
-    //     console.log("room 28", room);
-    //     if (room !== null) {
-    //         console.log('room changed to not null');
-    //         // setMessageList(dummyMessageList);
-    //         // // messageList = dummyMessageList;
-    //         // // setMessageList(room.messageList);
-    //         // dummyMessageList = room.messageList;
-    //         // console.log('dummy');
-    //         // console.log(dummyMessageList);
-    //         // console.log('state');
-    //         // console.log(messageList);
-    //         dummyMessageList = room.messageList;
-    //         setMessageList(room.messageList);
-    //         // setThisRoom(room);
-    //         ml_ref.current = room.messageList;
-    //         console.log("room 42");
-    //     }
-    //     else{
-    //         console.log('room changed to null');
-    //     }
-    //     // fetch('http://localhost:8000/api/room' + roomId)
-    //     // .then(res => {
-    //     //     if (res.status !== 404 && res.status !== 500)
-    //     //         return res.json();
-    //     //     else
-    //     //         throw Error('Could not fetch room data.');
-    //     // })
-    //     // .then(room => {
-    //     //     setRoom(room);
-    //     //     setMessageList(room.messageList);
-    //     // });
-    // }, [room]);
-
-    // useEffect(() => {
-    //     setRoomRefresh(roomRefresh + 1);
-    //     console.log('room refreshed');
-    // },[messageList]);
-
     useEffect((e) => {
         console.log("room 28", room);
         if (room !== null) {
             console.log('room changed to not null');
-            // setMessageList(dummyMessageList);
-            // // messageList = dummyMessageList;
-            // // setMessageList(room.messageList);
-            // dummyMessageList = room.messageList;
-            // console.log('dummy');
-            // console.log(dummyMessageList);
-            // console.log('state');
-            // console.log(messageList);
+            
             dummyMessageList = room.messageList;
             setMessageList(room.messageList);
             // setThisRoom(room);
@@ -87,46 +26,22 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
             console.log('room changed to null');
         }
         if (socket !== null) {
-            // console.log('inside socket(room.js)');
-            // console.log(room);
+            
             socket.on('message', (data) => {
-                // if (thisRoomId === data.roomId) {
-
-                // const dMessageList = messageList;
-                // dMessageList.push(data.message);
-
-                // setMessageList(dMessageList);
-
-                // dummyMessageList = messageList;
-                // dummyMessageList.push(data.message);
-                // console.log('dummy message list');
-                // console.log(dummyMessageList);
-                console.log("socket on message----- for" + user.userName);
-                // let dml = ml_ref.current;
-                // console.log(dml);
-                // dml = [...dml, data.message];
-                // ml_ref.current = 
-                // console.log(dml);
-                // setRoom((room) => {if (room && room._id === data.roomId)
-                //     setMessageList((messageList) => {return [...messageList, data.message]}); return room;})
                 
-                // setThisRoom((room) => {
-                //                         if (room && room._id === data.roomId){
-                //                             setMessageList((messageList) => {return [...messageList, data.message];}); 
-                //                         }
-                //                         return room;
-                //                     });
+                console.log("socket on message----- for" + user.userName);
+            
 
-                                    if (room && room._id === data.roomId){
-                                        console.log('received message');
-                                        console.log(data.message);
-                                        setMessageList((messageList) => {
-                                            if(messageList[messageList.length-1] === data.message)
-                                                return messageList;
-                                            else
-                                                return [...messageList, data.message];
-                                        }); 
-                                    }
+                if (room && room._id === data.roomId){
+                    console.log('received message');
+                    console.log(data.message);
+                    setMessageList((messageList) => {
+                        if(messageList[messageList.length-1] === data.message)
+                            return messageList;
+                        else
+                            return [...messageList, data.message];
+                    }); 
+                }
 
                 setRooms((rooms) => {
                     let dummyRooms = [...rooms];
@@ -139,15 +54,8 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
                     return dummyRooms;
                 });
 
-                // console.log(ro   om);
                 console.log(data);
                 
-
-                // }
-                // console.log('room');
-                // console.log(room);
-                // setRoom(room);
-                // setRoomRefresh(roomRefresh + 1);
             });
         }
     }, [room]);
@@ -183,8 +91,6 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
             isImage : false
         }
 
-        // dummyMessageList.push(msg);
-
         const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/room/messageList/' + room._id, {
             method : 'PUT',
             headers : { 'Content-Type' : 'application/json' },
@@ -206,9 +112,6 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
         // setRoom(room);
         socket.emit('message', info);
         setCurrentMessage('');
-        // setRoom(room);
-        // setSendButtonClicks(sendButtonClicks + 1);
-        // setRoomRefresh(roomRefresh + 1);
         
     };
 
@@ -324,9 +227,6 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
         <div className="chat-header">
             <p>{room && parseUnicast(room.roomName)}</p>
             {room.isMulticast && (<button onClick={leaveRoomHandler}>Leave Room</button>)}
-            {/* <div className="online-status">
-                {user.isOnline && <p>Online</p>}
-            </div> */}
         </div>
         {/* <hr></hr> */}
         <div className="chat-body">
@@ -337,9 +237,6 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
                     </li>
                 ))}
             </ul>
-
-            {/* <Message sender="John" message="Hello" time="2:59 pm" isSender={false} showName={true} />
-            <Message sender="You" message="Hello" time="3:01 pm" isSender={true} showName={true} /> */}
         </div>
         <div className="chat-sending-options">
             {room && 

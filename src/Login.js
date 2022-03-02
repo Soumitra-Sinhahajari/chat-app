@@ -32,10 +32,7 @@ const Login = (props) => {
             console.log(data);
             setError(data.errorMessage);
         }
-        // .catch((err)=>{
-        //     console.log('Error');
-        //     console.log(err.message);
-        // });
+        
     };
 
     const enterRegisterButtonClicked = async (e) => {
@@ -72,10 +69,7 @@ const Login = (props) => {
         } else {
             setError('User id is taken. Choose a different user id.');
         }
-        // .catch((err)=>{
-        //     console.log('Error');
-        //     console.log(err.message);
-        // });
+        
     };
 
     return (

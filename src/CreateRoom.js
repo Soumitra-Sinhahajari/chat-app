@@ -3,11 +3,7 @@ import { useHistory } from "react-router-dom";
 import './CreateRoom.css';
 
 const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setCreate}) => {
-    // const user = props.user;
-    // const setUser = props.setUser;
-    // const room = props.room;
-    // const setRoom = props.setRoom;
-    // const socket = props.socket;
+    
     const [userList, setUserList] = useState([]);
     const [userName, setUserName] = useState(null);
     const [roomName, setRoomName] = useState(null);
@@ -19,8 +15,6 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setC
         // Check if valid username using api
         const res = await fetch('https://chat-app-by-kd-ss.herokuapp.com/api/user/check/'+userName);
         if (res.status !== 404 && res.status !== 500) {
-            // const data = await res.json();
-            // console.log(data);
             const data = {
                 userName : userName
             };
@@ -82,12 +76,7 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setC
                 body : JSON.stringify(write_new_room)
             });
             if (res2.status !== 500 && res2.status !== 404) {
-                // setUser((user) => {
-                //     let updatedUser = {...user};
-                //     updatedUser.joinedRoomList = [joinedRoom, ...updatedUser.joinedRoomList];
-                //     return updatedUser;
-                // });  
-                // console.log(user);
+                
                 setCreate(false);
                 setRooms((rooms) => [joinedRoom, ...rooms]);
                 const dummyUserList = gotRoom.userList.filter((data) => data.userName !== user.userName);
@@ -99,7 +88,7 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setC
                     userList : dummyUserList
                 };
                 socket.emit('room created', info);
-                // History.push('/home');
+            
             } else {
                 const data = await res2.json();
                 setError(data.errorMessage);

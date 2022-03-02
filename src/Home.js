@@ -12,7 +12,6 @@ const Home = (props)=>{
     const user = props.user;
     const setUser = props.setUser;
     let socket = null;
-    // const [socket, setSocket] = useState(null);
 
     const [propSocket, setPropSocket] = useState(null);
     const [room, setRoom] = useState(null);
@@ -26,8 +25,7 @@ const Home = (props)=>{
         console.log(resdata);
         setRooms(resdata);
     };
-    // const [roomRefresh, setRoomRefresh] = useState(null);
-
+    
     const History = useHistory();
 
     useEffect(() => {
@@ -56,25 +54,8 @@ const Home = (props)=>{
             socket.disconnect();
         });
 
-        // socket.on('message', {
-
-        // })
 
     }, [setPropSocket, user]);
-
-    // useEffect(() => {
-    //     if (propSocket !== null) {
-    //         propSocket.on('message', (data) => {
-    //             if (room._id === data.roomId) {
-    //                 room.messageList.push(data.message);
-    //             }
-    //             console.log('room');
-    //             console.log(room);
-    //             setRoom(room);
-    //             setRoomRefresh(roomRefresh + 1);
-    //         });
-    //     }
-    // }, [propSocket]);
 
     const newRoom = (e) => {
         e.preventDefault();
@@ -132,8 +113,6 @@ const Home = (props)=>{
     return (
         
         <div className="homeOrCreate">
-            {/* <BrowserRouter>
-                <Route path="/home"> */}
                 <div className='home'>
                     <div className='user-logout'>
                         <button align="center" data-hover="Logout" onClick={(e) => logoutHandler(propSocket, e)}><span>Welcome {user.userName}!</span></button>
@@ -157,11 +136,6 @@ const Home = (props)=>{
                         </aside>
                     </div>
                 </div>
-                {/* </Route>
-                <Route path="/create">
-                    <CreateRoom user={ user } setUser={ setUser } room={ room } setRoom={ setRoom } socket={ propSocket } />
-                </Route>
-            </BrowserRouter> */}
         </div>
         
     );
