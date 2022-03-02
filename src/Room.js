@@ -205,6 +205,7 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
 
         // setRoom(room);
         socket.emit('message', info);
+        setCurrentMessage('');
         // setRoom(room);
         // setSendButtonClicks(sendButtonClicks + 1);
         // setRoomRefresh(roomRefresh + 1);
@@ -246,6 +247,7 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
         console.log(info);
 
         socket.emit('message', info);
+        // setCurrentImage(null);
 
     };
 
@@ -283,6 +285,7 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
                     headers : { 'Content-Type' : 'application/json' },
                     body : JSON.stringify(msg)
                 });
+                
                 const info = {
                     roomId : room._id,
                     message : msg,
@@ -304,6 +307,7 @@ const Room = ({user, room, setRoom, rooms, setRooms, socket, parseUnicast}) => {
                     console.log(data.errorMessage);
                     throw Error('Could not fetch room data.');
                 }
+
             } else {
                 const data = await userres.json();
                 throw Error(data.errorMessage);

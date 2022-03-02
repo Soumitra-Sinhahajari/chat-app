@@ -45,8 +45,9 @@ const CreateRoom = ({user, setUser, room, setRoom, rooms, setRooms, socket, setC
             userName : user.userName
         };
         dummyUserList.push(userdata);
-        setUserList(userList => [...userList, userdata]);
-        console.log(dummyUserList);
+        setUserList(dummyUserList);
+        console.log('when created room');
+        console.log(userList);
 
         const newRoom = {
             roomName : roomName,
