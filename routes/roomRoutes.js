@@ -15,7 +15,6 @@ router.get('/room/:id', async (req, res) => {
     try{
         if(await RoomModel.exists({_id : roomId})){
             const room_data = await RoomModel.find({_id : roomId});
-            console.log(room_data[0]);
             res.send(room_data[0]);
         }
         else{
@@ -29,15 +28,12 @@ router.get('/room/:id', async (req, res) => {
 
 router.post('/room', async (req, res) => {
     const new_room_data = req.body;
-    console.log(new_room_data);
 
     try{
 
         let initMsg = 'Room created';
         if (new_room_data.isMulticast === false && new_room_data.isBroadcast === false)
-            initMsg = 'Added you as a friend';
-
-        console.log(initMsg);        
+            initMsg = 'Added you as a friend';      
 
         var today = new Date();
         var date = today.getFullYear()+'-'+(today.getMonth()+1).toString().padStart(2, '0')+'-'+today.getDate().toString().padStart(2, '0');
@@ -59,8 +55,6 @@ router.post('/room', async (req, res) => {
                             lastChattedTime : dateTime
                         };
         global.roomList.push(write_room);
-        console.log(new_room);
-        console.log(global.roomList);
         res.send(new_room);
     }
     catch(err){
@@ -79,7 +73,6 @@ router.put('/room/messageList/:id', async (req, res) => {
 
             const room_index = global.roomList.findIndex( data => data.roomId === roomId );
             global.roomList[room_index].lastChattedTime = new_message.time;
-            console.log(updated_room_data);
             res.send({userList : updated_room_data[0].userList});
         }
         else{

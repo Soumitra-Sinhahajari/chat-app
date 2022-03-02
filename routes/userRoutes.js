@@ -27,11 +27,9 @@ router.get('/user/roomList/:id', async (req, res) => {
         if(await UserModel.exists({_id : user_id})){
             const user = await UserModel.find({ _id : user_id });
             const user_room_list = user[0].joinedRoomList;
-            console.log(user_room_list);
             let new_room_list = [];
             user_room_list.forEach(element => {
                 const room_index = global.roomList.findIndex( room => room.roomId === element.roomId );
-                console.log(room_index);
                 new_room_list.push(global.roomList[room_index]);
             });
             res.send(new_room_list);
@@ -51,7 +49,6 @@ router.get('/user/check/:name', async (req, res) => {
     try{
         if(await UserModel.exists({userName : user_name})){
             const user_data = await UserModel.find({userName : user_name});
-            console.log(user_data[0].userName);
             res.send(user_data[0].userName);
         }
         else{
@@ -91,8 +88,6 @@ router.get('/user/:name/:passWd', async (req, res) => {
 // Create new user at the time of registration
 router.post('/user', async (req, res) => {
     const new_user_data = req.body;
-    console.log('request received');
-    console.log(commonRoomDetails);
     new_user_data.joinedRoomList.push({
         roomName : commonRoomDetails.roomName,
         roomId : JSON.parse(JSON.stringify(commonRoomDetails._id)),

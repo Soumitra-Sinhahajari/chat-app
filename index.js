@@ -49,7 +49,6 @@ app.get ('/', (req, res) => {
 create_and_get_common_room_details("Common chat room")
 .then(async (res) => {
     global.commonRoomDetails = res;
-    console.log(commonRoomDetails);
     global.roomList = [];
     const all_room = await RoomModel.find({});
     all_room.forEach((data) => {
@@ -60,7 +59,6 @@ create_and_get_common_room_details("Common chat room")
         });
     });
 
-    console.log(roomList);
     const server = app.listen(process.env.PORT || 8000, ()=>{
         console.log('Server started successfully');
     });
@@ -126,14 +124,11 @@ create_and_get_common_room_details("Common chat room")
                 roomId : info.roomId,
                 message : info.message
             };
-            console.log(info);
 
             info.userList.forEach((user) => {
                 const user_index = userList.findIndex(data => data.userName === user.userName);
                 if (userList[user_index] !== undefined){
                     if(userList[user_index].isOnline === true){
-                        console.log('message sent to ' + user.userName);
-                        console.log(send_data);
                         userList[user_index].socket.emit('message', send_data);
                     }
                 }
