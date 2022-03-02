@@ -118,6 +118,9 @@ router.delete('/room/userList/:id', async (req, res) => {
             const room_updation_status = await RoomModel.find({_id : roomId}).updateOne({$pull : {userList : deleting_user}});
             const updated_room_data = await RoomModel.find({ _id : roomId});
             res.send({userList : updated_room_data[0].userList});
+            if (updated_room_data[0].userList.length === 0) {
+                const delete_room_status = await RoomModel.deleteOne({_id : roomId});
+            }
         }
         else{
             res.status(404).send({errorMessage : 'Room data not found'});
