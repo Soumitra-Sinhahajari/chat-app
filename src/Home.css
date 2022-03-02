@@ -35,7 +35,7 @@ aside{
 	background-position: center;
   	background-repeat: no-repeat;
   	background-size :cover;
-	  background-color: #278cff21;
+	  background-color:#000000;
     /* background-size :contain; */
     /* background-image : url('https://i.pinimg.com/originals/85/ec/df/85ecdf1c3611ecc9b7fa85282d9526e0.jpg'); */
 }
@@ -70,15 +70,26 @@ aside input::placeholder{
 }
 aside ul{
 	padding-left:0;
-	margin:0;
 	list-style-type:none;
 	overflow-y:scroll;
 	height:95%;
 	vertical-align: middle;
+	margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+	border-radius: 5px;
 }
 aside li{
 	padding:10px 10px;
 	vertical-align: middle;
+	margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+	border-radius: 10px;
+	background-color: #16171d;
+	
 }
 aside li:hover{
 	background-color:#278dff;
@@ -102,14 +113,14 @@ h1{
 	margin-top: 10px;
 	margin-bottom: 5px;
 	margin-left: 5%;
-	background-color: #278dff;
+	background-color: #000000;
 }
 
 .user-logout button{
 	font-size: 30px;
 	border: none;
 	background-repeat: no-repeat;
-	background-color: #278dff;
+	background-color: #000000;
 	color:aliceblue;
 }
 
@@ -121,12 +132,13 @@ h1{
 .user-logout button:hover::before {
 	border: none;
 	content: attr(data-hover);
-	background-color: #278dff;
+	background-color: #000000;
 	color: aliceblue;
 }
 
 h2,h3{
 	margin:0;
+	
 }
 aside li img{
 	border-radius:50%;
@@ -142,7 +154,7 @@ aside li div{
 }
 aside li h2{
 	font-size:20px;
-	color:rgb(0, 0, 0);
+	color:#fff;
 	font-weight:normal;
 	margin-bottom:5px;
 	vertical-align: middle;
@@ -150,7 +162,7 @@ aside li h2{
 
 aside li h3{
 	font-size:14px;
-	color:#45464b;
+	color:#fff;
 	font-weight:normal;
 	vertical-align: middle;
 }

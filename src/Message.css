@@ -7,7 +7,7 @@
   height: auto;
   display: block;
   /* background: #e46b82; */
-  background: #f1c13a;
+  background: #278dff;
   border-radius: 10px;
   box-shadow: 2px 8px 5px #000;
   position: relative;
@@ -28,7 +28,7 @@
   font-weight: 600;
   font-size: 14px;
   margin: 0 0 4px;
-  color: #125785;
+  color: #ffffff;
 }
 
 .span{
@@ -37,7 +37,7 @@
 }
 
 .alt .name{
-  color: #357951;
+  color: #ffffff;
 }
 
 /* .message{
@@ -49,7 +49,7 @@
 .text-message {
   font-size: 16px;
   margin: 0;
-  color: #2b2b2b;
+  color: #ffffff;
 }
 
 .message img {
@@ -63,7 +63,7 @@
   position: absolute;
   bottom: 8px;
   right: 10px;
-  text-transform: uppercase; color: rgb(105, 105, 105)
+  text-transform: uppercase; color: #ffffff;
 }
 
 .bubble-arrow {
@@ -84,7 +84,7 @@
   content: "";
   position: absolute;
   border: 0 solid transparent;
-  border-top: 9px solid   #f1c13a;
+  border-top: 9px solid   #278dff;
 
   border-radius: 0 20px 0;
   width: 15px;
